@@ -17,13 +17,13 @@ export default function CtaBanner() {
       <div className="max-w-7xl mx-auto px-margin-desktop relative z-10 flex flex-col md:flex-row items-center justify-between gap-space-xl">
         <div className="max-w-2xl flex flex-col gap-space-sm text-left">
           <span className="font-label-md text-label-md uppercase tracking-wider text-secondary-container font-bold">
-            Siap Menyelenggarakan Semester Ini?
+            Siap membuka ruang ujian pertama?
           </span>
           <h2 className="font-headline-xl text-headline-xl text-surface-card font-extrabold">
-            Jadikan Ujian Sekolah Tanpa Beban Cetak Kertas
+            Beri guru lebih banyak waktu untuk mengajar.
           </h2>
           <p className="font-body-lg text-body-lg text-secondary-container">
-            Bergabunglah bersama 120+ institusi pendidikan di seluruh Indonesia yang telah beralih ke asesmen presisi Skorly.id.
+            Mulai dari satu kelas hari ini. Soal, token, dan nilai tersusun dalam satu tempat.
           </p>
         </div>
 

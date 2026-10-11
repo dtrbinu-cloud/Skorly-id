@@ -15,7 +15,7 @@ export default function SectionHeading({
   return (
     <div className={alignClass}>
       {eyebrow && (
-        <span className="font-label-md text-label-md uppercase tracking-wider text-primary font-bold">
+        <span className="font-label-md text-label-md tracking-wide text-primary font-bold">
           {eyebrow}
         </span>
       )}
