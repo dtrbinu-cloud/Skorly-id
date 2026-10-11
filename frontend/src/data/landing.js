@@ -1,32 +1,32 @@
 export const navLinks = [
-  { label: 'Ujian', href: '#', active: true },
+  { label: 'Untuk Guru', href: '#fitur', active: true },
+  { label: 'Untuk Murid', href: '#simulasi', active: false },
+  { label: 'Cara kerja', href: '#cara-kerja', active: false },
   { label: 'Fitur', href: '#fitur', active: false },
-  { label: 'Alur', href: '#cara-kerja', active: false },
-  { label: 'Simulasi', href: '#pratinjau', active: false },
 ];
 
 export const trustBadges = [
-  { icon: 'verified', label: 'Anti-Kecurangan' },
-  { icon: 'wifi_tethering', label: 'Offline-Resilient' },
-  { icon: 'sync', label: 'Sync Dapodik' },
+  { icon: 'key', label: 'Token Ruang' },
+  { icon: 'bolt', label: 'Nilai Otomatis' },
+  { icon: 'dashboard', label: 'Rekap Instan' },
 ];
 
 export const sampleRooms = [
   {
     code: 'SKOR88',
-    name: 'Penilaian Akhir Semester Produktif RPL',
+    name: 'Latihan Soal Produktif RPL',
     teacher: 'Pak Hidayat, M.Kom',
     count: '40 Butir Soal',
   },
   {
     code: 'MATK12',
-    name: 'Ulangan Harian Matematika Peminatan XII',
+    name: 'Kuis Harian Matematika Peminatan XII',
     teacher: 'Ibu Ratna Dewi, S.Pd',
     count: '30 Butir Soal',
   },
   {
     code: 'IND099',
-    name: 'Asesmen Sumatif Bahasa Indonesia Fase F',
+    name: 'Ulangan Harian Bahasa Indonesia Fase F',
     teacher: 'Drs. Bambang S.',
     count: '50 Butir Soal',
   },
@@ -34,7 +34,7 @@ export const sampleRooms = [
 
 export const initialRoom = {
   code: 'SKOR88',
-  name: 'PAS Produktif Rekayasa Perangkat Lunak',
+  name: 'Latihan Soal Produktif Rekayasa Perangkat Lunak',
   teacher: 'Pak Hidayat, M.Kom',
   count: '40 Soal',
 };
@@ -42,20 +42,23 @@ export const initialRoom = {
 export const statsData = [
   {
     icon: 'bolt',
-    value: '0.2s',
-    label: 'Koreksi Kilat',
+    title: 'Nilai Otomatis',
+    description: 'Langsung keluar saat murid selesai mengerjakan. Guru tidak perlu lagi memeriksa tumpukan lembar jawaban satu per satu.',
+    action: 'Koreksi Real-Time',
+    iconBg: 'bg-status-success',
+  },
+  {
+    icon: 'key',
+    title: 'Token Unik per Ruang',
+    description: 'Akses praktis per ruang tanpa pendaftaran rumit. Cukup bagikan 6 karakter token saat jam pelajaran dimulai.',
+    action: 'Akses Terjadwal Aman',
     iconBg: 'bg-primary',
   },
   {
     icon: 'layers',
-    value: '200+',
-    label: 'Soal per Ruang',
-    iconBg: 'bg-primary',
-  },
-  {
-    icon: 'eco',
-    value: '100%',
-    label: 'Paperless',
+    title: 'Sampai 200+ Soal',
+    description: 'Pilihan ganda praktis tanpa cetak kertas. Mampu menampung bank soal skala besar untuk tryout hingga asesmen semester.',
+    action: '100% Hemat Kertas',
     iconBg: 'bg-status-warning',
   },
 ];
@@ -63,27 +66,27 @@ export const statsData = [
 export const featuresData = [
   {
     icon: 'upload_file',
-    title: 'Impor Fleksibel',
-    description: 'Unggah file Excel, Word, atau PDF tanpa pengetikan ulang.',
-    badgeText: 'Template XLS',
+    title: 'Unggah Soal & Kunci',
+    description: 'Guru mengunggah naskah soal pilihan ganda beserta kunci jawaban dengan cepat.',
+    badgeText: 'Format Rapi',
   },
   {
     icon: 'key',
-    title: 'Token 1-Klik',
-    description: 'Generate token acak untuk mencegah akses di luar jadwal ujian.',
-    badgeText: 'Sesi Terenkripsi',
+    title: 'Token Ruang',
+    description: 'Buat ruang kelas dan bagikan token 6 karakter untuk murid masuk.',
+    badgeText: 'Akses Ruang',
   },
   {
     icon: 'analytics',
-    title: 'Analisis Butir',
-    description: 'Koreksi seketika beserta indeks daya pembeda dan tingkat kesulitan.',
-    badgeText: 'Statistik Nilai',
+    title: 'Penilaian Otomatis',
+    description: 'Sistem langsung mengoreksi seluruh jawaban murid seketika di server.',
+    badgeText: 'Koreksi Kilat',
   },
   {
-    icon: 'download',
-    title: 'Ekspor Dapodik',
-    description: 'Unduh legger nilai format resmi yang kompatibel dengan e-Rapor.',
-    badgeText: 'Format Resmi',
+    icon: 'dashboard',
+    title: 'Rekap Nilai Guru',
+    description: 'Nilai seluruh murid otomatis tersusun rapi di dashboard guru.',
+    badgeText: 'Rekap Seketika',
   },
 ];
 
@@ -92,8 +95,8 @@ export const stepsData = [
     step: '1',
     badgeBg: 'bg-primary',
     icon: 'cloud_upload',
-    title: 'Unggah Soal',
-    description: 'Siapkan naskah soal atau import bank soal.',
+    title: 'Unggah Soal & Kunci',
+    description: 'Guru menyiapkan naskah soal pilihan ganda dan kunci jawaban.',
     duration: '3 Menit',
     durationColor: 'text-primary',
   },
@@ -101,8 +104,8 @@ export const stepsData = [
     step: '2',
     badgeBg: 'bg-primary',
     icon: 'pin',
-    title: 'Bagi Token',
-    description: 'Siswa memasukkan 6 karakter token ruang.',
+    title: 'Bagi Token Ruang',
+    description: 'Murid memasukkan 6 karakter token ruang untuk mulai mengerjakan.',
     duration: '30 Detik',
     durationColor: 'text-primary',
   },
@@ -110,8 +113,8 @@ export const stepsData = [
     step: '3',
     badgeBg: 'bg-status-warning',
     icon: 'download_done',
-    title: 'Hasil Seketika',
-    description: 'Unduh rekap nilai lengkap begitu ujian usai.',
+    title: 'Nilai Langsung Masuk',
+    description: 'Murid selesai mengerjakan, nilai otomatis tampil di dashboard guru.',
     duration: '0.2 Detik',
     durationColor: 'text-tertiary-container',
   },
@@ -167,19 +170,19 @@ export const footerColumns = [
   {
     title: 'Navigasi Utama',
     links: [
-      { label: 'Portal Siswa', href: '#' },
-      { label: 'Ruang Guru & Proktor', href: '#' },
-      { label: 'Jadwal Asesmen Nasional', href: '#' },
-      { label: 'Unduh Aplikasi Kunci Layar', href: '#' },
+      { label: 'Portal Murid', href: '/masuk' },
+      { label: 'Dashboard Guru', href: '/masuk' },
+      { label: 'Panduan Penggunaan', href: '#cara-kerja' },
+      { label: 'Mulai Mengerjakan', href: '#simulasi' },
     ],
   },
   {
     title: 'Dukungan & Legal',
     links: [
-      { label: 'Pusat Bantuan Proktor', href: '#' },
-      { label: 'Kebijakan Privasi Data Siswa', href: '#' },
-      { label: 'Syarat & Ketentuan Layanan', href: '#' },
-      { label: 'Sertifikasi Enkripsi Data', href: '#' },
+      { label: 'Pusat Bantuan', href: '#' },
+      { label: 'Kebijakan Privasi', href: '#' },
+      { label: 'Syarat & Ketentuan', href: '#' },
+      { label: 'Status Server', href: '#' },
     ],
   },
 ];

@@ -4,12 +4,12 @@ import { stepsData } from '../../data/landing';
 
 export default function HowItWorks() {
   return (
-    <section className="w-full py-20 bg-surface-card" id="cara-kerja">
+    <section className="workflow-steps w-full py-20 text-surface-card" id="cara-kerja">
       <div className="max-w-7xl mx-auto px-margin-desktop flex flex-col gap-space-2xl">
         <SectionHeading
           eyebrow="Alur Kerja Cepat"
-          title="3 Langkah Menyelenggarakan Ujian"
-          description="Tanpa instalasi server lab komputer, tanpa kabel LAN rumit."
+          title="Tiga langkah menuju soal siap pakai"
+          description="Tidak perlu belajar sistem baru. Alurnya dibuat agar guru bisa langsung mulai."
           align="center"
         />
 
@@ -18,24 +18,24 @@ export default function HowItWorks() {
           {stepsData.map((item) => (
             <div
               key={item.step}
-              className="p-space-xl rounded-xl bg-surface-container-low flex flex-col gap-space-md"
+              className="step-row p-space-xl rounded-xl flex flex-col gap-space-md md:flex-row md:items-center"
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`w-9 h-9 rounded-full ${item.badgeBg} text-surface-card font-headline-sm flex items-center justify-center font-bold text-[16px]`}
+                  className={`step-badge w-9 h-9 rounded-full ${item.badgeBg} text-surface-card font-headline-sm flex items-center justify-center font-bold text-[16px] shrink-0`}
                 >
                   {item.step}
                 </span>
                 <Icon
                   name={item.icon}
-                  className="text-text-muted text-[24px]"
+                  className="step-icon text-[24px]"
                 />
               </div>
               <div>
-                <h3 className="font-headline-md text-headline-sm font-bold text-on-surface">
+                <h3 className="font-headline-md text-headline-sm font-bold step-title">
                   {item.title}
                 </h3>
-                <p className="font-body-sm text-body-sm text-text-muted mt-1">
+                <p className="font-body-sm text-body-sm step-description mt-1">
                   {item.description}
                 </p>
               </div>

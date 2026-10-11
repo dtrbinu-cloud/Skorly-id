@@ -15,20 +15,20 @@ export default function Navbar() {
                 Skorly<span className="text-tertiary-container">.id</span>
               </span>
               <span className="font-label-sm text-label-sm text-text-muted uppercase tracking-wider block">
-                Asesmen Mandiri
+                Soal dan Nilai Otomatis
               </span>
             </div>
           </div>
-          <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low">
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low">
             <span className="w-2 h-2 rounded-full bg-status-success"></span>
             <span className="font-label-md text-label-md text-on-surface font-semibold">
-              Sistem Siap Ujian
+              Siap Digunakan
             </span>
           </div>
         </div>
 
         <nav
-          className="hidden md:flex items-center gap-space-md"
+          className="hidden lg:flex items-center gap-space-md"
           data-active-classes="bg-primary-container text-on-primary font-bold rounded-lg"
           aria-label="Navigasi Utama"
         >
@@ -48,18 +48,14 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-space-md">
-          <div className="hidden sm:flex flex-col text-right">
-            <span className="font-label-md text-label-md font-semibold text-on-surface">
-              Peserta Ujian
-            </span>
-            <span className="font-label-sm text-label-sm text-text-muted">
-              Mode Terpantau
-            </span>
-          </div>
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <Icon name="person" className="text-on-primary text-[18px]" />
-          </div>
+        <div className="flex items-center gap-2">
+          <a href="/masuk" className="hidden sm:inline-flex px-4 py-2 rounded-lg text-primary font-label-lg font-bold hover:bg-surface-container-low transition-colors">
+            Masuk
+          </a>
+          <a href="/daftar" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-on-primary font-label-lg font-bold shadow-sm hover:bg-primary-container transition-colors">
+            Buat ruang
+            <Icon name="arrow_forward" className="text-[17px]" />
+          </a>
         </div>
       </div>
     </header>

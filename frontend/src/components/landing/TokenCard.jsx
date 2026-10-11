@@ -44,7 +44,7 @@ export default function TokenCard() {
       {/* Glass Accent Glow */}
       <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-secondary-container/40 blur-3xl pointer-events-none"></div>
 
-      <div className="relative bg-surface-card rounded-xl p-space-xl shadow-xl flex flex-col gap-space-md">
+      <div className="token-window relative bg-surface-card rounded-xl p-space-xl shadow-xl flex flex-col gap-space-md">
         <div className="flex items-center justify-between pb-1">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-status-danger"></span>
@@ -58,10 +58,10 @@ export default function TokenCard() {
 
         <div>
           <span className="font-headline-sm text-headline-sm font-bold text-on-surface block">
-            Akses Ruang CBT
+            Akses Ruang Soal
           </span>
           <p className="font-body-sm text-body-sm text-text-muted">
-            Masukkan token ujian kelas
+            Masukkan token ruang kelas
           </p>
         </div>
 
@@ -122,7 +122,7 @@ export default function TokenCard() {
                 {roomState.data.name}
               </div>
               <div className="text-text-muted font-body-sm text-[12px]">
-                Penguji: {roomState.data.teacher}
+                Guru: {roomState.data.teacher}
               </div>
             </>
           )}
@@ -139,7 +139,7 @@ export default function TokenCard() {
                 {roomState.data.name}
               </div>
               <div className="flex items-center justify-between text-text-muted font-body-sm text-body-sm pt-1">
-                <span>Penguji: {roomState.data.teacher}</span>
+                <span>Guru: {roomState.data.teacher}</span>
                 <span className="font-semibold text-primary">
                   {roomState.data.count}
                 </span>
@@ -156,10 +156,10 @@ export default function TokenCard() {
                 </span>
               </div>
               <div className="font-headline-sm text-body-md text-on-surface font-semibold">
-                Kode &quot;{roomState.searchedCode}&quot; Belum Dijadwalkan
+                Kode &quot;{roomState.searchedCode}&quot; Belum Tersedia
               </div>
               <div className="text-text-muted font-body-sm text-body-sm pt-1">
-                Harap tanyakan ulang token resmi 6-digit kepada pengawas ujian di kelas.
+                Harap tanyakan ulang token ruang 6 karakter kepada guru Anda di kelas.
               </div>
             </>
           )}

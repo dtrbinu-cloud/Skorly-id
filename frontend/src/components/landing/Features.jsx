@@ -8,14 +8,14 @@ export default function Features() {
       <div className="max-w-7xl mx-auto px-margin-desktop flex flex-col gap-space-2xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
           <SectionHeading
-            eyebrow="Keahlian Praktis Pengajar"
-            title="Fitur Andalan Guru Modern"
-            description="Didesain bersama puluhan guru SMK dan SMA di Jawa Timur demi efisiensi kerja tanpa pelatihan rumit."
+            eyebrow="Satu alur untuk semua"
+            title="Semua yang dibutuhkan untuk ujian yang tertib"
+            description="Dari file soal sampai rekap nilai, Skorly membantu guru mengurangi pekerjaan berulang tanpa membuat murid bingung."
             className="max-w-2xl"
           />
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md">
-              Tampilan Web Desktop Khusus Pengawas
+              Dibuat untuk alur belajar sehari-hari
             </span>
           </div>
         </div>
