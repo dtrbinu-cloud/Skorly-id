@@ -134,64 +134,18 @@ export default function Register() {
           </div>
 
           {/* Left Body: Headline, Subline & Feature Points */}
-          <div className="relative z-10 my-auto py-2 xl:py-4 max-w-lg">
-            <div className="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-primary-container/40 text-on-primary-container text-label-sm font-label-sm mb-3 xl:mb-4">
-              <span className="material-symbols-outlined text-[16px]">verified</span>
-              <span>Sistem Ujian Digital CBT Terpadu</span>
-            </div>
-            <h1 className="text-on-primary font-headline-xl text-[32px] xl:text-[40px] leading-[40px] xl:leading-[48px] font-extrabold tracking-tight mb-3 xl:mb-4">
-              Mulai dalam hitungan menit.
-            </h1>
-            <p className="text-primary-fixed font-body-md xl:font-body-lg text-sm xl:text-base mb-4 xl:mb-6 leading-relaxed">
-              Guru membuat ruang dan membagikan token. Murid masuk dan langsung mengerjakan.
-            </p>
-
-            {/* Feature List Items */}
-            <div className="space-y-3 xl:space-y-4">
-              {/* Feature 1: Guru */}
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-primary-container/25 backdrop-blur-sm">
-                <div className="w-10 h-10 rounded-lg bg-surface-card/15 flex items-center justify-center shrink-0 text-primary-fixed">
-                  <span className="material-symbols-outlined text-[22px]">cast_for_education</span>
-                </div>
-                <div>
-                  <p className="font-label-md text-sm text-surface-card font-semibold mb-0.5">
-                    Untuk guru
-                  </p>
-                  <p className="font-body-sm text-xs xl:text-sm text-primary-fixed leading-snug">
-                    Unggah soal, buat ruang, dan pantau rekapan nilai secara real-time.
-                  </p>
-                </div>
-              </div>
-
-              {/* Feature 2: Murid */}
-              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-primary-container/25 backdrop-blur-sm">
-                <div className="w-10 h-10 rounded-lg bg-surface-card/15 flex items-center justify-center shrink-0 text-primary-fixed">
-                  <span className="material-symbols-outlined text-[22px]">school</span>
-                </div>
-                <div>
-                  <p className="font-label-md text-sm text-surface-card font-semibold mb-0.5">
-                    Untuk murid
-                  </p>
-                  <p className="font-body-sm text-xs xl:text-sm text-primary-fixed leading-snug">
-                    Masukkan token, kerjakan ujian tanpa gangguan, dan langsung lihat hasil.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="relative z-10 flex-1 w-full flex flex-col items-center justify-end pb-2 xl:pb-4">
+            <img
+              src="/assets/register-illustration-source.png"
+              alt="Ilustrasi pendaftaran akun Skorly"
+              className="auth-illustration w-full max-w-[900px] h-auto max-h-[650px] object-contain mx-auto mb-2 xl:mb-4"
+            />
           </div>
 
-          {/* Left Footer */}
-          <div className="relative z-10 pt-3 flex items-center justify-between text-primary-fixed-dim font-body-sm text-xs xl:text-sm">
-            <span>© 2025 Skorly.id. Hak cipta dilindungi.</span>
-            <span className="inline-flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
-              Server CBT Siap
-            </span>
-          </div>
         </div>
 
         {/* RIGHT COLUMN: Registration Form & States (#F3F6FB) */}
-        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-center items-center p-3 sm:p-5 lg:p-6 h-full overflow-hidden">
+        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-center items-center p-4 sm:p-5 lg:p-6 h-full overflow-hidden">
           {/* Mobile Brand Header */}
           <div className="flex lg:hidden items-center space-x-2.5 mb-2.5">
             <Link to="/" className="flex items-center space-x-2.5">
@@ -451,6 +405,23 @@ export default function Register() {
                     </button>
                   </div>
                 </form>
+
+                {/* Google Registration */}
+                <div className="relative my-3 text-center">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full h-px bg-surface-container-high"></div>
+                  </div>
+                  <span className="relative px-2.5 bg-surface-card font-label-sm text-[10px] text-text-muted">
+                    ATAU
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="w-full h-9.5 sm:h-10 rounded-lg border border-surface-container-high bg-surface-card hover:bg-surface-container-low text-on-surface font-label-md text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
+                >
+                  <span className="font-bold text-base leading-none text-[#4285F4]">G</span>
+                  <span>Daftar dengan Google</span>
+                </button>
 
                 {/* Footer Switch to Login */}
                 <div className="mt-2.5 sm:mt-3 pt-2 text-center border-t border-surface-container-high/60">
