@@ -62,6 +62,13 @@
   transform: scale(1.02);
 }
 
+/* Auth illustrations use the same gentle floating motion as the landing hero. */
+.auth-illustration {
+  animation: teacher-breathe 7s ease-in-out infinite;
+  translate: 0 -40px;
+  will-change: transform;
+}
+
 .landing-page .hero-orbit {
   position: absolute;
   border-radius: 999px;
@@ -205,6 +212,7 @@
   .landing-page .hero-ui-card,
   .landing-page .hero-teacher,
   .landing-page .hero-image-wrap { animation: none; }
+  .auth-illustration { animation: none; }
 }
 
 @media (max-width: 1023px) {
@@ -417,6 +425,7 @@ html {
   color: #004395;
   text-decoration: none;
   position: relative;
+  margin-right: 12px;
   padding: 4px 2px;
   white-space: nowrap;
 }

@@ -129,72 +129,18 @@ export default function Login() {
           </div>
 
           {/* Vertically Centered Core Value Proposition */}
-          <div className="relative z-10 max-w-lg my-auto py-2 xl:py-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container/60 text-primary-fixed font-label-sm text-label-sm uppercase tracking-wider mb-4 xl:mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
-              CBT Platform Nasional
-            </span>
-            <h1 className="font-headline-xl text-[32px] xl:text-[38px] leading-[40px] xl:leading-[46px] font-extrabold text-on-primary tracking-tight mb-3 xl:mb-4">
-              Ujian online.
-              <br />
-              Nilai instan.
-            </h1>
-            <p className="font-body-md xl:font-body-lg text-[#D8E6FD] max-w-md leading-relaxed mb-6 xl:mb-8 text-sm xl:text-base">
-              Masuk untuk mengerjakan ujian atau memantau nilai murid secara akurat dan transparan.
-            </p>
-
-            {/* 3 Benefit Bullet Points */}
-            <ul className="space-y-3 xl:space-y-4">
-              <li className="flex items-start gap-3">
-                <span
-                  className="material-symbols-outlined text-primary-fixed mt-0.5 text-[20px] xl:text-[22px]"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  check_circle
-                </span>
-                <span className="font-body-sm xl:font-body-md text-on-primary leading-snug">
-                  Token ruang untuk akses ujian aman dan tersinkronisasi
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span
-                  className="material-symbols-outlined text-primary-fixed mt-0.5 text-[20px] xl:text-[22px]"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  check_circle
-                </span>
-                <span className="font-body-sm xl:font-body-md text-on-primary leading-snug">
-                  Penilaian otomatis di server tanpa manipulasi data
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span
-                  className="material-symbols-outlined text-primary-fixed mt-0.5 text-[20px] xl:text-[22px]"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  check_circle
-                </span>
-                <span className="font-body-sm xl:font-body-md text-on-primary leading-snug">
-                  Nilai langsung masuk ke dashboard guru seketika
-                </span>
-              </li>
-            </ul>
+          <div className="relative z-10 flex-1 w-full flex items-center justify-end pb-2 xl:pb-4">
+            <img
+              src="/assets/login-illustration-source.png"
+              alt="Ilustrasi login Skorly"
+              className="auth-illustration w-full max-w-[900px] h-auto max-h-[650px] object-contain"
+            />
           </div>
 
-          {/* Bottom Copyright & Security Badge */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-3 text-[#aec6ff]">
-            <p className="font-body-sm text-xs xl:text-sm">
-              © 2025 Skorly.id • Hak Cipta Dilindungi.
-            </p>
-            <div className="flex items-center gap-1.5 font-label-sm text-xs xl:text-sm">
-              <span className="material-symbols-outlined text-[15px]">lock</span>
-              <span>Enkripsi 256-bit</span>
-            </div>
-          </div>
         </div>
 
         {/* RIGHT FORM COLUMN (50% on desktop) */}
-        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 h-full overflow-hidden">
+        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-center items-center p-5 sm:p-6 lg:p-8 h-full overflow-hidden">
           {/* Mobile Brand Header */}
           <div className="flex lg:hidden items-center space-x-2.5 mb-4">
             <Link to="/" className="flex items-center space-x-2.5">
@@ -211,9 +157,9 @@ export default function Login() {
           </div>
 
           {/* Login Card Container */}
-          <div className="w-full max-w-[420px] bg-surface-card rounded-xl p-5 sm:p-7 shadow-[0_4px_24px_-4px_rgba(15,42,92,0.08)]">
+          <div className="w-full max-w-[420px] bg-surface-card rounded-xl p-4 sm:p-7 shadow-[0_4px_24px_-4px_rgba(15,42,92,0.08)]">
             {/* Header */}
-            <div className="mb-4 sm:mb-5">
+            <div className="mb-3 sm:mb-5">
               <h2 className="font-headline-md text-xl sm:text-2xl font-bold text-text-primary tracking-tight">
                 Masuk ke Skorly.id
               </h2>
@@ -413,8 +359,25 @@ export default function Login() {
               </div>
             </form>
 
+            {/* Google Login */}
+            <div className="relative my-3 text-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full h-px bg-surface-container-high"></div>
+              </div>
+              <span className="relative px-2.5 bg-surface-card font-label-sm text-[11px] text-text-muted">
+                ATAU
+              </span>
+            </div>
+            <button
+              type="button"
+              className="w-full h-10 px-3.5 rounded-lg border border-surface-container-high bg-surface-card hover:bg-surface-container-low flex items-center justify-center gap-2 text-on-surface font-label-md text-xs sm:text-sm transition-colors"
+            >
+              <span className="font-bold text-base leading-none text-[#4285F4]">G</span>
+              <span>Lanjutkan dengan Google</span>
+            </button>
+
             {/* Room Token Quick Entry Divider */}
-            <div className="relative my-4 text-center">
+            <div className="relative my-3 text-center">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full h-px bg-surface-container-high"></div>
               </div>
@@ -436,7 +399,7 @@ export default function Login() {
             </Link>
 
             {/* Footer Card Link */}
-            <div className="text-center mt-4">
+            <div className="text-center mt-3">
               <p className="font-body-sm text-xs sm:text-sm text-text-muted">
                 Belum punya akun?{' '}
                 <Link
@@ -450,7 +413,7 @@ export default function Login() {
           </div>
 
           {/* Trust Badges & Help Center */}
-          <div className="w-full max-w-[420px] flex items-center justify-between text-text-muted font-body-sm text-xs mt-3 sm:mt-4 px-2">
+          <div className="w-full max-w-[420px] flex items-center justify-between text-text-muted font-body-sm text-xs mt-1 sm:mt-4 px-2">
             <a className="hover:text-primary transition-colors flex items-center gap-1" href="#">
               <span className="material-symbols-outlined text-[15px]">help_outline</span>
               Pusat Bantuan

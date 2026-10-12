@@ -82,14 +82,6 @@ export default function FloatNav() {
 
   /* ---- user info ---- */
   const firstName = user?.nama?.split(' ')[0] || '';
-  const initials = user
-    ? user.nama
-        .split(' ')
-        .map((w) => w[0])
-        .join('')
-        .slice(0, 2)
-        .toUpperCase()
-    : '';
   const loginHref = user ? '/dashboard' : '/masuk';
 
   return (
@@ -105,13 +97,6 @@ export default function FloatNav() {
               Skorly<span className="fnav-logo-dot">.id</span>
             </span>
           </a>
-          <span
-            className="fnav-status"
-            aria-label="Siap digunakan"
-            title="Siap digunakan"
-          >
-            <span className="fnav-status-dot" />
-          </span>
         </div>
 
         {/* ===== CENTER: Links (desktop) ===== */}
@@ -142,21 +127,10 @@ export default function FloatNav() {
           })}
         </nav>
 
-        {/* ===== RIGHT: Login + Avatar + Hamburger ===== */}
+        {/* ===== RIGHT: Login + Hamburger ===== */}
         <div className="fnav-right">
           <Link to={loginHref} className="fnav-login">
             {user ? firstName : 'Masuk'}
-          </Link>
-          <Link
-            to={user ? '/dashboard' : '/masuk'}
-            className="fnav-avatar"
-            aria-label={user ? `Profil ${firstName}` : 'Masuk ke akun'}
-          >
-            {user ? (
-              <span className="fnav-avatar-initials">{initials}</span>
-            ) : (
-              <Icon name="person" className="fnav-avatar-icon" />
-            )}
           </Link>
 
           {/* Hamburger (mobile only) */}
