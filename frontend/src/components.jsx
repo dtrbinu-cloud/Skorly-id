@@ -22,6 +22,10 @@ const menu={
 export function Shell(){
   const {user,logout}=useAuth(),go=useNavigate()
   if(!user) return <Navigate to="/masuk" replace/>
+  if(user.role==='murid') return <div className="student-shell">
+    <header className="student-topbar"><Logo/><div className="student-topbar-actions"><span className="student-user-name">{user.nama}</span><button onClick={()=>{logout();go('/')}}>Keluar</button></div></header>
+    <main><Outlet/></main>
+  </div>
   return <div className="shell"><aside><Logo/><nav>
     {menu[user.role].map(([to,t])=><NavLink key={to} to={to} end>{t}</NavLink>)}
     <button onClick={()=>{logout();go('/')}}>Keluar</button></nav>
