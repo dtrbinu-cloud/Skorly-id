@@ -111,68 +111,127 @@
   animation: landing-rise 700ms ease both;
 }
 
-/* Softer palette for the workflow cards: calm contrast while keeping text readable. */
 .landing-page .workflow-steps {
   background: #202a35;
 }
 
-.landing-page .workflow-steps .step-row {
-  background: #2a3541;
-  border: 1px solid #3a4653;
+.landing-page .workflow-intro {
+  max-width: 31rem;
 }
 
-.landing-page .workflow-steps .step-title {
-  color: #e7ebf0;
+.landing-page .workflow-eyebrow {
+  margin: 0 0 1.25rem;
+  color: #8dbfff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
 
-.landing-page .workflow-steps .step-description {
-  color: #b2bdca;
+.landing-page .workflow-heading {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(2.35rem, 4vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
 }
 
-.landing-page .workflow-steps .step-icon {
-  color: #a6bad6;
+.landing-page .workflow-lead {
+  max-width: 32rem;
+  margin: 1.5rem 0 2.25rem;
+  color: #b7c3d7;
+  font-size: 1.2rem;
+  line-height: 1.75;
 }
 
-.landing-page .workflow-steps .step-badge.bg-primary {
-  background: #356391;
-}
-
-.landing-page .workflow-steps .step-badge.bg-tertiary-container {
-  background: #b27a28;
-}
-
-.landing-page .workflow-steps .step-badge.bg-status-warning {
-  background: #b27a28;
-}
-
-.landing-page .workflow-steps .text-on-surface {
-  color: #e7ebf0;
-}
-
-.landing-page .workflow-steps .text-text-muted {
-  color: #b2bdca;
-}
-
-.landing-page .workflow-steps .text-primary {
-  color: #8eb1d9;
-}
-
-.landing-page .workflow-steps .text-tertiary-container {
-  color: #d2a35a;
-}
-
-.landing-page .workflow-field,
-.landing-page .question-row {
-  transition: transform 180ms ease, background-color 180ms ease;
-}
-
-.landing-page .workflow-field {
-  display: flex;
+.landing-page .workflow-cta {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.85rem 0.9rem;
-  border-radius: 0.7rem;
-  color: #dbe7ff;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  background: #2d28ff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.landing-page .workflow-cta:hover {
+  background: #4844ff;
+  transform: translateY(-2px);
+}
+
+.landing-page .workflow-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.landing-page .workflow-steps .step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
+  min-height: 9.8rem;
+  padding: 1.7rem 1.65rem;
+  border: 1px solid #30405d;
+  border-radius: 1.1rem;
+  background: #111a30;
+  animation: landing-rise 700ms ease both;
+}
+
+.landing-page .step-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 3.1rem;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 0.8rem;
+  background: #2d28ff;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.landing-page .step-number.is-last {
+  background: #2d28ff;
+}
+
+.landing-page .step-copy {
+  padding-top: 0.15rem;
+}
+
+.landing-page .step-copy h3 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.landing-page .step-copy p {
+  max-width: 42rem;
+  margin: 0.75rem 0 0;
+  color: #8eadd7;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .landing-page .workflow-steps {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .landing-page .workflow-steps .step-row {
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .landing-page .step-number {
+    flex-basis: 2.7rem;
+    width: 2.7rem;
+    height: 2.7rem;
+  }
 }
 
 .landing-page .workflow-field.is-active,

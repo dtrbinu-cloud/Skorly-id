@@ -32,11 +32,6 @@ export default function Hero() {
         <div className="grid grid-cols-12 gap-gutter-desktop items-center">
           {/* Left Hero Column (7 Cols) */}
           <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-space-lg">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-fixed text-primary font-label-md shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
-              <span>Platform ujian untuk sekolah yang lebih rapi</span>
-            </div>
-
             <h1 className="font-headline-xl text-[42px] md:text-[64px] text-on-surface tracking-[-0.04em] font-extrabold leading-[1.05]">
               Dari soal,
               <br />

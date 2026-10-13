@@ -1,5 +1,5 @@
 export const rooms=[
- {id:1,judul:'Matematika Dasar – Bab 3',token:'K7M2-QX9P',soal:200,durasi:90,status:'Buka',peserta:28,tutup:'12 Okt 2026, 10.00'},
+ {id:1,judul:'Matematika Dasar – Bab 3',token:'SKOR88',soal:200,durasi:90,status:'Buka',peserta:28,tutup:'12 Okt 2026, 10.00'},
  {id:2,judul:'Bahasa Indonesia – PTS',token:'B4TN-8RLW',soal:60,durasi:60,status:'Buka',peserta:31,tutup:'14 Okt 2026, 09.00'},
  {id:3,judul:'IPA Terpadu – Latihan 2',token:'H9ZC-2DVE',soal:40,durasi:45,status:'Tutup',peserta:30,tutup:'2 Okt 2026, 11.30'}]
 export const hasil=[
