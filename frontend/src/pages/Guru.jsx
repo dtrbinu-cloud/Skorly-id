@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {rooms,hasil,pratinjau} from '../data'
 import {Stat} from '../components'
+import QuestionCard from '../exam/QuestionCard'
 export function GuruDash(){
   const [sel,setSel]=useState(rooms[0])
   return <><div className="row between"><h1>Ruang saya</h1><Link className="btn" to="/guru/buat">Buat ruang</Link></div>
@@ -25,10 +26,31 @@ export function BuatRuang(){
     <button className="btn" disabled={!file} onClick={()=>setStep(2)}>Lanjut ke pratinjau</button></section>}
   {step===2&&<section className="panel"><div className="row between"><h2>{items.length} soal terbaca</h2>
     {kosong>0&&<span className="chip bad">{kosong} soal belum punya kunci</span>}</div>
-    {items.map(x=><article key={x.no} className={'prev'+(x.kunci?'':' miss')}><p><b>{x.no}.</b> {x.teks}</p>
-      <ol type="A">{x.opsi.map(o=><li key={o}>{o}</li>)}</ol>
-      <label className="small">Kunci jawaban <select value={x.kunci||''} onChange={e=>setKey(x.no,e.target.value)}><option value="">Belum ada</option>{'ABCDE'.split('').map(k=><option key={k}>{k}</option>)}</select></label>
-      {!x.kunci&&<p className="err">Soal ini belum punya kunci. Lengkapi sebelum membuat ruang.</p>}</article>)}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', margin: '16px 0' }}>
+      {items.map(x=><div key={x.no} style={{ background: '#f8fafc', padding: '16px', borderRadius: '14px', border: x.kunci ? '1px solid #c3c6d4' : '2px solid #ef4444' }}>
+        <QuestionCard
+          mode="guru"
+          question={{
+            id: x.no,
+            nomor: x.no,
+            teks: x.teks,
+            opsi: x.opsi.map((o, idx) => ({ kode: 'ABCDE'[idx], teks: o })),
+            kunci: x.kunci,
+          }}
+          total={items.length}
+          currentIndex={x.no - 1}
+        />
+        <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <label className="small" style={{ margin: 0, fontWeight: 700 }}>
+            Ubah kunci jawaban:
+            <select value={x.kunci||''} onChange={e=>setKey(x.no,e.target.value)} style={{ display: 'inline-block', width: 'auto', marginLeft: '8px' }}>
+              <option value="">Belum ada</option>{'ABCDE'.split('').map(k=><option key={k}>{k}</option>)}
+            </select>
+          </label>
+          {!x.kunci&&<span className="err">Soal ini belum punya kunci. Lengkapi sebelum membuat ruang.</span>}
+        </div>
+      </div>)}
+    </div>
     <div className="row"><button className="btn ghost" onClick={()=>setStep(1)}>Ganti file</button><button className="btn" disabled={kosong>0} onClick={()=>setStep(3)}>Lanjut ke pengaturan</button></div></section>}
   {step===3&&<section className="panel">{token?<div className="made"><h2>Ruang dibuat</h2><p className="small">Bagikan token ini ke murid:</p><div className="tk-big">{token}</div><Link className="btn" to="/guru">Ke daftar ruang</Link></div>:
     <form className="formgrid" onSubmit={e=>{e.preventDefault();setToken('R5QD-7NWA')}}>

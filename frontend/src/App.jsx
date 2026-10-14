@@ -3,10 +3,11 @@ import PublicLayout from './layouts/PublicLayout';
 import Landing from './pages/Landing';
 import { Shell, Guard } from './components';
 import { Login, Register } from './pages/Auth';
-import { MuridDash, Ujian, Hasil } from './pages/Murid';
+import { MuridDash, Hasil } from './pages/Murid';
 import { GuruDash, BuatRuang } from './pages/Guru';
 import Admin from './pages/Admin';
 import { Profil, Pengaturan } from './pages/Akun';
+import ExamPage from './exam/ExamPage';
 
 export default function App() {
   return (
@@ -30,7 +31,10 @@ export default function App() {
         <Route path="/pengaturan" element={<Pengaturan />} />
       </Route>
 
-      <Route path="/ujian" element={<Ujian />} />
+      {/* Rute pengerjaan ujian murid dengan attemptId (tanpa token di URL) */}
+      <Route path="/kerjakan/:attemptId" element={<ExamPage />} />
+      <Route path="/ujian" element={<ExamPage />} />
     </Routes>
   );
 }
+

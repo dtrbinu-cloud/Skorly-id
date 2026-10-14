@@ -12,7 +12,7 @@ export function MuridDash(){
     const input=normalizeToken(value)
     const room=rooms.find(item=>normalizeToken(item.token)===input&&item.status==='Buka')
     if(!room){setError('Token tidak ditemukan atau ruang ujian sudah ditutup.');return}
-    go(`/ujian?token=${encodeURIComponent(room.token)}`)
+    go(`/kerjakan/att-${room.id}`)
   }
   const updateChar=(index,value)=>{
     const clean=value.toUpperCase().replace(/[^A-Z0-9]/g,'')
