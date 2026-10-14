@@ -3,6 +3,7 @@ import StatsBar from '../components/landing/StatsBar';
 import Features from '../components/landing/Features';
 import HowItWorks from '../components/landing/HowItWorks';
 import WorkflowPreview from '../components/landing/WorkflowPreview';
+import ExamPreview from '../components/landing/ExamPreview';
 import CtaBanner from '../components/landing/CtaBanner';
 
 export default function Landing() {
@@ -11,6 +12,7 @@ export default function Landing() {
       <Hero />
       <StatsBar />
       <WorkflowPreview />
+      <ExamPreview />
       <HowItWorks />
       <Features />
       <CtaBanner />
