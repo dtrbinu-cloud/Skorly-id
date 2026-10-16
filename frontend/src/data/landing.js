@@ -1,3 +1,5 @@
+import { TicketIcon, ClipboardCheckIcon, BarChartIcon } from '../components/icons';
+
 export const navLinks = [
   { label: 'Untuk Guru', href: '#fitur', active: true },
   { label: 'Untuk Murid', href: '#simulasi', active: false },
@@ -6,9 +8,9 @@ export const navLinks = [
 ];
 
 export const trustBadges = [
-  { icon: 'key', label: 'Token Ruang' },
-  { icon: 'bolt', label: 'Nilai Otomatis' },
-  { icon: 'dashboard', label: 'Rekap Instan' },
+  { icon: TicketIcon, label: 'Token Ruang' },
+  { icon: ClipboardCheckIcon, label: 'Nilai Otomatis' },
+  { icon: BarChartIcon, label: 'Rekap Instan' },
 ];
 
 export const sampleRooms = [
@@ -41,14 +43,14 @@ export const initialRoom = {
 
 export const statsData = [
   {
-    icon: 'bolt',
+    icon: ClipboardCheckIcon,
     title: 'Nilai Otomatis',
     description: 'Langsung keluar saat murid selesai mengerjakan. Guru tidak perlu lagi memeriksa tumpukan lembar jawaban satu per satu.',
     action: 'Koreksi Real-Time',
     iconBg: 'bg-status-success',
   },
   {
-    icon: 'key',
+    icon: TicketIcon,
     title: 'Token Unik per Ruang',
     description: 'Akses praktis per ruang tanpa pendaftaran rumit. Cukup bagikan 6 karakter token saat jam pelajaran dimulai.',
     action: 'Akses Terjadwal Aman',
@@ -71,19 +73,19 @@ export const featuresData = [
     badgeText: 'Format Rapi',
   },
   {
-    icon: 'key',
+    icon: TicketIcon,
     title: 'Token Ruang',
     description: 'Buat ruang kelas dan bagikan token 6 karakter untuk murid masuk.',
     badgeText: 'Akses Ruang',
   },
   {
-    icon: 'analytics',
+    icon: ClipboardCheckIcon,
     title: 'Penilaian Otomatis',
     description: 'Sistem langsung mengoreksi seluruh jawaban murid seketika di server.',
     badgeText: 'Koreksi Kilat',
   },
   {
-    icon: 'dashboard',
+    icon: BarChartIcon,
     title: 'Rekap Nilai Guru',
     description: 'Nilai seluruh murid otomatis tersusun rapi di dashboard guru.',
     badgeText: 'Rekap Seketika',

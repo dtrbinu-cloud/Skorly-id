@@ -29,7 +29,11 @@ export default function Features() {
             >
               <div className="flex flex-col gap-3">
                 <div className="w-11 h-11 rounded-lg bg-surface-container-high text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-surface-card transition-colors">
-                  <Icon name={item.icon} className="text-[22px]" />
+                  {typeof item.icon === 'function' ? (
+                    <item.icon size={24} className="flex-none" />
+                  ) : (
+                    <Icon name={item.icon} className="text-[24px]" />
+                  )}
                 </div>
                 <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
                   {item.title}

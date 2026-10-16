@@ -59,18 +59,9 @@ export default function ExamPage({ mode = 'student' }) {
 
   // Callback waktu habis dari timer
   const handleTimeUp = useCallback(async () => {
-    // Kumpulkan otomatis saat waktu habis
-    try {
-      if (!isDemo) {
-        await fetch(`/attempts/${encodeURIComponent(attemptId)}/submit`, {
-          method: 'POST',
-        });
-      }
-    } catch {
-      // Lanjutkan ke hasil meskipun fetch gagal di offline
-    }
+    // Belum ada backend: lanjutkan ke hasil tanpa mengirim atau menyimpan data.
     navigate('/hasil', { replace: true });
-  }, [attemptId, isDemo, navigate]);
+  }, [navigate]);
 
   // Hook timer ujian
   const isTimerEnabled = Boolean(deadline);
@@ -105,7 +96,6 @@ export default function ExamPage({ mode = 'student' }) {
         setServerNow(new Date(now).toISOString());
         setDeadline(new Date(now + 90 * 60 * 1000).toISOString());
         setIsLoading(false);
-        setShowToast(true);
       }, 200);
       return;
     }
@@ -146,33 +136,16 @@ export default function ExamPage({ mode = 'student' }) {
       const matchedRoom = rooms[0];
       const now = Date.now();
 
-      // Pulihkan backup lokal jika ada
-      let restoredAnswers = {};
-      let restoredFlags = {};
-      let restoredIndex = 0;
-      try {
-        const backup = JSON.parse(
-          localStorage.getItem(`skorly_backup_${attemptId}`) || '{}'
-        );
-        Object.keys(backup).forEach((k) => {
-          if (backup[k]?.pilihan) restoredAnswers[k] = backup[k].pilihan;
-          if (backup[k]?.ragu) restoredFlags[k] = backup[k].ragu;
-          if (typeof backup[k]?.lastIndex === 'number') {
-            restoredIndex = backup[k].lastIndex;
-          }
-        });
-      } catch {
-        // ignore
-      }
-
       setQuestions(soalUjian);
       setRoomInfo(matchedRoom);
-      setAnswers(restoredAnswers);
-      setFlags(restoredFlags);
-      setCurrentIndex(Math.min(restoredIndex, soalUjian.length - 1));
+      setAnswers({});
+      setFlags({});
+      setCurrentIndex(0);
       setServerNow(new Date(now).toISOString());
       setDeadline(new Date(now + (matchedRoom.durasi || 60) * 60 * 1000).toISOString());
-      setShowToast(true);
+      if (!isDemo) {
+        setShowToast(true);
+      }
       setIsLoading(false);
     }
   }, [attemptId, isDemo, navigate]);
@@ -308,7 +281,7 @@ export default function ExamPage({ mode = 'student' }) {
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
         handleNext();
-      } else if (key === 'R') {
+      } else if (key === 'R' && !e.ctrlKey && !e.altKey && !e.metaKey) {
         e.preventDefault();
         handleToggleFlag();
       }
@@ -349,26 +322,9 @@ export default function ExamPage({ mode = 'student' }) {
   const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
     try {
-      if (!isDemo) {
-        await fetch(`/attempts/${encodeURIComponent(attemptId)}/submit`, {
-          method: 'POST',
-        });
-      } else {
-        // HANYA DEMO: simulasi pengiriman dan penilaian lokal
-        let skorBenar = 0;
-        questions.forEach((q) => {
-          if (q.kunci && answers[q.id] === q.kunci) {
-            skorBenar += 1;
-          }
-        });
-        localStorage.setItem(
-          'skorly_demo_result',
-          JSON.stringify({
-            benar: skorBenar,
-            total: questions.length,
-            nilai: Math.round((skorBenar / questions.length) * 100),
-          })
-        );
+      // Simulasi submit sementara: tidak ada request backend dan tidak ada
+      // penyimpanan hasil ke browser.
+      if (isDemo) {
         await new Promise((r) => setTimeout(r, 600));
       }
       navigate('/hasil');
