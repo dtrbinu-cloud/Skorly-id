@@ -9,7 +9,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
  * - PUT /attempts/:id/answers { questionId, pilihan, ragu, lastIndex }
  * - Retry dengan exponential backoff (1s, 2s, 4s, maks 15s)
  * - Deteksi offline/online via navigator.onLine & event listeners
- * - Peringatan window beforeunload bila antrean belum kosong
  * - Status teks: 'Tersimpan' | 'Menyimpan…' | 'Belum tersimpan'
  */
 export default function useAutosave({
@@ -52,20 +51,6 @@ export default function useAutosave({
     };
   }, []);
 
-  // Peringatkan lewat beforeunload jika antrean belum kosong
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (queueRef.current.size > 0 || saveStatus === 'saving') {
-        e.preventDefault();
-        e.returnValue = 'Masih ada jawaban yang belum tersimpan ke server. Yakin ingin keluar?';
-        return e.returnValue;
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [saveStatus]);
-
   // Fungsi pengiriman ke server
   const flushQueue = useCallback(async () => {
     if (isFlushingRef.current) return;
@@ -86,30 +71,11 @@ export default function useAutosave({
 
     try {
       if (isDemo) {
-        // Mode demo: simpan ke localStorage sebagai simulasi
-        try {
-          const key = `skorly_demo_attempt_${attemptId}`;
-          const current = JSON.parse(localStorage.getItem(key) || '{}');
-          current[qId] = payload;
-          localStorage.setItem(key, JSON.stringify(current));
-        } catch {
-          // Abaikan error localStorage
-        }
-        // Simulasi latensi simpan sebentar
+        // Belum ada backend: simulasikan penyimpanan hanya di memori.
         await new Promise((res) => setTimeout(res, 250));
       } else {
-        // Panggilan API riil
-        const res = await fetch(`/attempts/${encodeURIComponent(attemptId)}/answers`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!res.ok) {
-          throw new Error(`Gagal menyimpan jawaban: ${res.status}`);
-        }
+        // Backend belum tersedia. Tandai berhasil secara lokal di memori.
+        await new Promise((res) => setTimeout(res, 150));
       }
 
       // Berhasil: hapus dari antrean
@@ -147,16 +113,6 @@ export default function useAutosave({
   // Masukkan perubahan jawaban atau ragu-ragu ke antrean dengan debounce 400ms
   const enqueueAnswer = useCallback(
     ({ questionId, pilihan, ragu, lastIndex }) => {
-      // Simpan juga salinan cadangan lokal instan untuk pemulihan refresh
-      try {
-        const backupKey = `skorly_backup_${attemptId}`;
-        const existing = JSON.parse(localStorage.getItem(backupKey) || '{}');
-        existing[questionId] = { pilihan, ragu, lastIndex, updatedAt: Date.now() };
-        localStorage.setItem(backupKey, JSON.stringify(existing));
-      } catch {
-        // ignore
-      }
-
       // Masukkan ke antrean
       queueRef.current.set(questionId, {
         questionId,

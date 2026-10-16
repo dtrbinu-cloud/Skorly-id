@@ -22,7 +22,11 @@ export default function StatsBar() {
               <div
                 className={`w-14 h-14 rounded-xl ${stat.iconBg} text-surface-card flex items-center justify-center shrink-0 shadow-md`}
               >
-                <Icon name={stat.icon} className="text-[30px]" />
+                {typeof stat.icon === 'function' ? (
+                  <stat.icon size={24} className="flex-none" />
+                ) : (
+                  <Icon name={stat.icon} className="text-[24px]" />
+                )}
               </div>
               <div className="flex flex-col flex-1 mt-7">
                 <h3 className="font-headline-md text-headline-md text-on-surface font-bold">

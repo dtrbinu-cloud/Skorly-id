@@ -60,15 +60,25 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-wrap items-center gap-x-space-lg gap-y-2 pt-4 text-text-muted font-label-sm">
-              {trustBadges.map((badge) => (
-                <div key={badge.label} className="flex items-center gap-1.5">
-                  <Icon
-                    name={badge.icon}
-                    className="text-status-success text-[18px]"
-                  />
-                  <span>{badge.label}</span>
-                </div>
-              ))}
+              {trustBadges.map((badge) => {
+                const BadgeIcon = badge.icon;
+                return (
+                  <div key={badge.label} className="inline-flex items-center gap-2">
+                    {typeof BadgeIcon === 'function' ? (
+                      <BadgeIcon
+                        size={20}
+                        className="text-status-success flex-none"
+                      />
+                    ) : (
+                      <Icon
+                        name={badge.icon}
+                        className="text-status-success text-[20px] flex-none"
+                      />
+                    )}
+                    <span>{badge.label}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
