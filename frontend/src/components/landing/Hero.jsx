@@ -32,13 +32,13 @@ export default function Hero() {
         <div className="grid grid-cols-12 gap-gutter-desktop items-center">
           {/* Left Hero Column (7 Cols) */}
           <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-space-lg">
-            <h1 className="font-headline-xl text-[42px] md:text-[64px] text-on-surface tracking-[-0.04em] font-extrabold leading-[1.05]">
+            <h1 className="font-headline-xl text-[42px] md:text-[76px] text-on-surface tracking-[-0.04em] font-extrabold leading-[1.03]">
               Dari soal,
               <br />
               <span className="text-primary-container">langsung jadi nilai.</span>
             </h1>
 
-            <p className="font-body-lg text-body-lg text-text-muted max-w-xl leading-relaxed text-[17px]">
+            <p className="font-body-lg text-body-lg text-text-muted max-w-xl leading-relaxed text-[19px]">
               Guru menyiapkan ujian dalam satu ruang. Murid masuk dengan token. Jawaban dinilai otomatis dan hasilnya langsung siap dibaca.
             </p>
 
