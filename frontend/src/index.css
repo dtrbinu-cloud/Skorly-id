@@ -762,15 +762,24 @@ html {
 }
 
 /* Real image inside slide */
+.ac-image-frame {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.ac-image-frame .ac-ph-chrome {
+  flex: 0 0 auto;
+}
+
 .ac-img {
   display: block;
   width: 100%;
-  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  height: auto;
   object-fit: cover;
   object-position: top;
-  border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
 }
 
 /* ── Placeholder card ──────────────────────────────────────────── */

@@ -49,13 +49,21 @@ function Card({ s, i, active, neighbor }) {
     return <Placeholder index={i} />;
   }
   return (
-    <img
-      className="ac-img"
-      src={s.src}
-      alt={s.alt}
-      draggable={false}
-      loading={active || neighbor ? 'eager' : 'lazy'}
-    />
+    <div className="ac-image-frame">
+      <div className="ac-ph-chrome" aria-hidden="true">
+        <span className="ac-ph-dot" />
+        <span className="ac-ph-dot" />
+        <span className="ac-ph-dot" />
+        <span className="ac-ph-url" />
+      </div>
+      <img
+        className="ac-img"
+        src={s.src}
+        alt={s.alt}
+        draggable={false}
+        loading={active || neighbor ? 'eager' : 'lazy'}
+      />
+    </div>
   );
 }
 
@@ -255,4 +263,3 @@ export default function AlurCarousel() {
     </section>
   );
 }
-
