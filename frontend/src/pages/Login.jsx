@@ -133,14 +133,15 @@ export default function Login() {
             <img
               src="/assets/login-illustration-source.png"
               alt="Ilustrasi login Skorly"
-              className="auth-illustration w-full max-w-[900px] h-auto max-h-[650px] object-contain"
+              className="auth-illustration login-auth-illustration w-full max-w-[760px] h-auto max-h-[540px] object-contain"
             />
           </div>
 
         </div>
 
         {/* RIGHT FORM COLUMN (50% on desktop) */}
-        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-center items-center p-5 sm:p-6 lg:p-8 h-full overflow-hidden">
+        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-start items-center p-5 sm:p-6 lg:p-8 h-full overflow-y-auto">
+          <div className="w-full max-w-[420px] my-auto py-2 sm:py-4">
           {/* Mobile Brand Header */}
           <div className="flex lg:hidden items-center space-x-2.5 mb-4">
             <Link to="/" className="flex items-center space-x-2.5">
@@ -426,6 +427,7 @@ export default function Login() {
             <a className="hover:text-primary transition-colors" href="#">
               Status Server
             </a>
+          </div>
           </div>
         </div>
       </div>
