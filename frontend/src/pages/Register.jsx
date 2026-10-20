@@ -145,7 +145,7 @@ export default function Register() {
         </div>
 
         {/* RIGHT COLUMN: Registration Form & States (#F3F6FB) */}
-        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-center items-center p-4 sm:p-5 lg:p-6 h-full overflow-hidden">
+        <div className="w-full lg:w-1/2 bg-surface-canvas flex flex-col justify-start items-center p-4 sm:p-5 lg:p-6 h-full overflow-y-auto">
           {/* Mobile Brand Header */}
           <div className="flex lg:hidden items-center space-x-2.5 mb-2.5">
             <Link to="/" className="flex items-center space-x-2.5">
@@ -165,7 +165,7 @@ export default function Register() {
           </div>
 
           {/* Center Content Wrapper (Max 440px) */}
-          <div className="w-full max-w-[440px]">
+          <div className="w-full max-w-[440px] my-auto py-2 sm:py-4">
             {/* ================= CARD 1: FORM VIEW ================= */}
             {viewState === 'form' && (
               <div
@@ -177,7 +177,6 @@ export default function Register() {
                     Daftar Akun Baru
                   </h2>
                   <p className="font-body-sm text-xs text-text-muted">
-                    Pilih peran akun dan lengkapi data diri Anda.
                   </p>
                 </div>
 
@@ -192,11 +191,10 @@ export default function Register() {
                       id="tab-murid"
                       type="button"
                       onClick={() => setRole('murid')}
-                      className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg font-label-md text-xs transition-all duration-200 font-semibold ${
-                        role === 'murid'
+                      className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg font-label-md text-xs transition-all duration-200 font-semibold ${role === 'murid'
                           ? 'bg-primary-container text-on-primary shadow-sm'
                           : 'text-on-surface hover:bg-surface-card/60'
-                      }`}
+                        }`}
                     >
                       <span className="material-symbols-outlined text-[16px]">school</span>
                       <span>Murid</span>
@@ -206,11 +204,10 @@ export default function Register() {
                       id="tab-guru"
                       type="button"
                       onClick={() => setRole('guru')}
-                      className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg font-label-md text-xs transition-all duration-200 font-semibold ${
-                        role === 'guru'
+                      className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg font-label-md text-xs transition-all duration-200 font-semibold ${role === 'guru'
                           ? 'bg-primary-container text-on-primary shadow-sm'
                           : 'text-on-surface hover:bg-surface-card/60'
-                      }`}
+                        }`}
                     >
                       <span className="material-symbols-outlined text-[16px]">cast_for_education</span>
                       <span>Guru</span>
@@ -266,11 +263,10 @@ export default function Register() {
                           if (emailError) setEmailError(false);
                         }}
                         placeholder="nama@email.com"
-                        className={`w-full h-9 sm:h-10 pl-9 pr-3 rounded-lg font-body-sm text-xs outline-none transition-all duration-150 ${
-                          emailError
+                        className={`w-full h-9 sm:h-10 pl-9 pr-3 rounded-lg font-body-sm text-xs outline-none transition-all duration-150 ${emailError
                             ? 'bg-error-container/30 text-error focus:bg-error-container/40'
                             : 'bg-surface-container-low text-text-primary focus:bg-surface-card focus:shadow-sm'
-                        }`}
+                          }`}
                       />
                     </div>
                     {/* Email Warning Indicator (Error State) */}
@@ -338,11 +334,10 @@ export default function Register() {
                           if (confirmError) setConfirmError(false);
                         }}
                         placeholder="Ulangi kata sandi"
-                        className={`w-full h-9 sm:h-10 pl-9 pr-9 rounded-lg font-body-sm text-xs outline-none transition-all duration-150 ${
-                          confirmError
+                        className={`w-full h-9 sm:h-10 pl-9 pr-9 rounded-lg font-body-sm text-xs outline-none transition-all duration-150 ${confirmError
                             ? 'bg-error-container/30 text-error focus:bg-error-container/40'
                             : 'bg-surface-container-low text-text-primary focus:bg-surface-card focus:shadow-sm'
-                        }`}
+                          }`}
                       />
                       <button
                         type="button"

@@ -5,6 +5,7 @@ import { Shell, Guard } from './components';
 import { Login, Register } from './pages/Auth';
 import { MuridDash, Hasil } from './pages/Murid';
 import { GuruDash, BuatRuang } from './pages/Guru';
+import GuruDashboard from './pages/GuruDashboard';
 import Admin from './pages/Admin';
 import { Profil, Pengaturan } from './pages/Akun';
 import ExamPage from './exam/ExamPage';
@@ -24,7 +25,8 @@ export default function App() {
       <Route element={<Shell />}>
         <Route path="/murid" element={<Guard role="murid"><MuridDash /></Guard>} />
         <Route path="/hasil" element={<Guard role="murid"><Hasil /></Guard>} />
-        <Route path="/guru" element={<Guard role="guru"><GuruDash /></Guard>} />
+        <Route path="/guru" element={<Guard role="guru"><GuruDashboard /></Guard>} />
+        <Route path="/guru/ruang/:id" element={<Guard role="guru"><GuruDashboard /></Guard>} />
         <Route path="/guru/buat" element={<Guard role="guru"><BuatRuang /></Guard>} />
         <Route path="/admin" element={<Guard role="admin"><Admin /></Guard>} />
         <Route path="/profil" element={<Profil />} />
@@ -37,4 +39,3 @@ export default function App() {
     </Routes>
   );
 }
-

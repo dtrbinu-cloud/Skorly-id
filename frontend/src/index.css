@@ -69,6 +69,10 @@
   will-change: transform;
 }
 
+.login-auth-illustration {
+  translate: 0 0;
+}
+
 .landing-page .hero-orbit {
   position: absolute;
   border-radius: 999px;

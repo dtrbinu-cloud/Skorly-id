@@ -1,4 +1,4 @@
-import {Link,NavLink,Outlet,Navigate,useNavigate} from 'react-router-dom'
+import {Link,NavLink,Outlet,Navigate,useNavigate,useLocation} from 'react-router-dom'
 import {useAuth} from './auth'
 export const Logo=({light})=><Link to="/" className={'logo'+(light?' light':'')}><span className="mark"/>Skorly.id</Link>
 export function Navbar(){
@@ -20,12 +20,13 @@ const menu={
  guru:[['/guru','Ruang saya'],['/guru/buat','Buat ruang'],['/profil','Profil'],['/pengaturan','Pengaturan']],
  admin:[['/admin','Persetujuan guru'],['/profil','Profil'],['/pengaturan','Pengaturan']]}
 export function Shell(){
-  const {user,logout}=useAuth(),go=useNavigate()
+  const {user,logout}=useAuth(),go=useNavigate(),location=useLocation()
   if(!user) return <Navigate to="/masuk" replace/>
   if(user.role==='murid') return <div className="student-shell">
     <header className="student-topbar"><Logo/><div className="student-topbar-actions"><span className="student-user-name">{user.nama}</span><button onClick={()=>{logout();go('/')}}>Keluar</button></div></header>
     <main><Outlet/></main>
   </div>
+  if(user.role==='guru' && (location.pathname==='/guru' || location.pathname.startsWith('/guru/ruang/'))) return <Outlet/>
   return <div className="shell"><aside><Logo/><nav>
     {menu[user.role].map(([to,t])=><NavLink key={to} to={to} end>{t}</NavLink>)}
     <button onClick={()=>{logout();go('/')}}>Keluar</button></nav>
