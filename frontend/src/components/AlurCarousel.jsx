@@ -43,9 +43,29 @@ function Placeholder({ index }) {
   );
 }
 
+function DashboardPreview() {
+  return (
+    <div className="ac-dashboard-preview" role="img" aria-label="Pratinjau dashboard guru Skorly">
+      <div className="ac-ph-chrome" aria-hidden="true">
+        <span className="ac-ph-dot" />
+        <span className="ac-ph-dot" />
+        <span className="ac-ph-dot" />
+        <span className="ac-ph-url" />
+      </div>
+      <div className="ac-dash-top"><b><i>S</i> Skorly<span>.id</span></b><span>Ruang saya</span><button>＋ Buat ruang</button><em>BW&nbsp; Budi W.</em></div>
+      <div className="ac-dash-body"><small>● &nbsp; RABU, 21 OKTOBER 2026</small><h2>Halo, Budi 👋</h2><p>Semoga harimu menyenangkan! <b>3 ruang</b> sedang terbuka aktif saat ini.</p>
+        <div className="ac-dash-stats"><div><strong>3</strong><span>Ruang terbuka</span></div><div><strong>39</strong><span>Mengumpulkan hari ini</span></div><div className="warn"><strong>1</strong><span>Perlu diperiksa</span></div></div>
+        <div className="ac-dash-attention"><b>Perlu perhatian</b><span>🔵 &nbsp; Ulangan Harian Matematika Bab 3 <small>ditutup besok. 6 murid belum mengumpulkan.</small></span><span>🟠 &nbsp; Ulangan Tengah Semester Biologi Sel <small>sudah ditutup. Periksa nilainya.</small></span></div>
+        <div className="ac-dash-columns"><div><div className="ac-dash-tabs">▣ Terbuka (3) &nbsp;&nbsp; ✓ Selesai (2)</div><div className="ac-dash-room"><b>Ulangan Harian Matematika Bab 3</b><span>Ulangan &nbsp; Terbuka</span><small>20 soal · 30 menit · Tutup besok</small><div className="ac-dash-progress">24 dari 30 sudah mengumpulkan <i/></div></div></div><div className="ac-dash-activity"><b>Aktivitas terbaru</b><span>● Rian Pratama mengumpulkan nilai 95</span><span>● Siti Rahmawati mengumpulkan nilai 90</span><span>● Nadia Putri mulai mengerjakan</span></div></div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Slide card (placeholder or real image) ────────────────────── */
 function Card({ s, i, active, neighbor }) {
   if (s.src == null) {
+    if (i === 0) return <DashboardPreview />;
     return <Placeholder index={i} />;
   }
   return (
