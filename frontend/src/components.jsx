@@ -26,7 +26,7 @@ export function Shell(){
     <header className="student-topbar"><Logo/><div className="student-topbar-actions"><span className="student-user-name">{user.nama}</span><button onClick={()=>{logout();go('/')}}>Keluar</button></div></header>
     <main><Outlet/></main>
   </div>
-  if(user.role==='guru' && (location.pathname==='/guru' || location.pathname.startsWith('/guru/ruang/'))) return <Outlet/>
+  if(user.role==='guru' && (location.pathname==='/guru' || location.pathname.startsWith('/guru/ruang/') || location.pathname.startsWith('/guru/buat'))) return <Outlet/>
   return <div className="shell"><aside><Logo/><nav>
     {menu[user.role].map(([to,t])=><NavLink key={to} to={to} end>{t}</NavLink>)}
     <button onClick={()=>{logout();go('/')}}>Keluar</button></nav>
