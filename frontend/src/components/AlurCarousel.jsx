@@ -1,7 +1,6 @@
 import {
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -120,6 +119,7 @@ export default function AlurCarousel() {
   const root = useRef(null);
   const sx = useRef(null);
   const moved = useRef(false);
+  const dragWidth = useRef(0);
 
   const [a, setA] = useState(0);
   const [inView, setInView] = useState(true);
@@ -134,12 +134,6 @@ export default function AlurCarousel() {
 
   // Compute signed distances for every slide
   const ds = slides.map((_, i) => rel(i, a, n));
-
-  // Keep previous distances so we can detect wrapping jumps
-  const prev = useRef(ds);
-  useLayoutEffect(() => {
-    prev.current = ds;
-  });
 
   // Navigate to slide index (wrapping)
   const go = useCallback((i) => setA(((i % n) + n) % n), [n]);
@@ -175,18 +169,32 @@ export default function AlurCarousel() {
   const onDown = (e) => {
     sx.current = e.clientX;
     moved.current = false;
+    dragWidth.current = parseFloat(getComputedStyle(e.currentTarget).getPropertyValue('--w')) || 0;
+    e.currentTarget.classList.add('is-dragging');
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+  };
+
+  const onMove = (e) => {
+    if (sx.current == null || !root.current || !dragWidth.current) return;
+    const dx = e.clientX - sx.current;
+    if (Math.abs(dx) > 5) moved.current = true;
+    root.current.style.setProperty('--drag', String(dx / dragWidth.current));
   };
 
   const onUp = (e) => {
     if (sx.current == null) return;
     const dx = e.clientX - sx.current;
     sx.current = null;
+    root.current?.style.setProperty('--drag', '0');
+    root.current?.classList.remove('is-dragging');
     if (Math.abs(dx) > 5) moved.current = true;
     if (Math.abs(dx) > 50) go(a + (dx < 0 ? 1 : -1));
   };
 
   const onCancel = () => {
     sx.current = null;
+    root.current?.style.setProperty('--drag', '0');
+    root.current?.classList.remove('is-dragging');
   };
 
   /* ── Render ──────────────────────────────────────────────────── */
@@ -209,13 +217,13 @@ export default function AlurCarousel() {
         }
       }}
       onPointerDown={onDown}
+      onPointerMove={onMove}
       onPointerUp={onUp}
       onPointerCancel={onCancel}
     >
       <div className="ac-stage">
         {slides.map((s, i) => {
           const d = ds[i];
-          const jump = Math.abs(d - prev.current[i]) > 1;
           const isActive = d === 0;
           const isNeighbor = Math.abs(d) === 1;
 
@@ -231,7 +239,7 @@ export default function AlurCarousel() {
               aria-label={`${i + 1} dari ${n}`}
               style={{
                 '--d': d,
-                transition: jump || reduce ? 'none' : undefined,
+                transition: reduce ? 'none' : undefined,
               }}
               onClick={() => {
                 if (d !== 0 && !moved.current) go(a + d);
@@ -246,6 +254,7 @@ export default function AlurCarousel() {
         <button
           className="ac-arrow ac-arrow-l"
           aria-label="Slide sebelumnya"
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();
             go(a - 1);
@@ -256,6 +265,7 @@ export default function AlurCarousel() {
         <button
           className="ac-arrow ac-arrow-r"
           aria-label="Slide berikutnya"
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();
             go(a + 1);

@@ -34,7 +34,7 @@ export default function Login() {
       // Login default berhasil -> arahkan ke dashboard yang sesuai
       if (login) {
         const u = login(email);
-        navigate('/' + (u?.role || 'guru'));
+        navigate('/' + (u?.role || 'murid'));
       } else {
         setScreenState('default');
       }
@@ -198,7 +198,7 @@ export default function Login() {
                     hourglass_top
                   </span>
                   <div className="font-body-sm text-xs sm:text-sm text-[#92400E] leading-snug">
-                    Akun guru kamu sedang menunggu persetujuan admin. Kamu bisa masuk setelah disetujui.
+                    Akunmu sedang menunggu verifikasi admin. Kamu bisa masuk setelah disetujui.
                   </div>
                 </div>
               </div>

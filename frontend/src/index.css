@@ -315,7 +315,7 @@ html {
 /* --- The outer header: positions the pill, carries entry animation --- */
 .fnav {
   --p: 0;
-  --full: min(1760px, 100vw - 50px);
+  --full: min(1760px, 100vw - 48px);
   --small: min(880px, 100vw - 86px);
   position: fixed;
   top: 0;
@@ -324,7 +324,7 @@ html {
   z-index: 50;
   display: flex;
   justify-content: center;
-  padding: calc(16px - 4px * var(--p)) 16px 0;
+  padding: calc(18px - 4px * var(--p)) 16px 0;
   pointer-events: none;
   animation: navin .6s cubic-bezier(.22, 1, .36, 1) both;
 }
@@ -334,7 +334,7 @@ html {
   pointer-events: auto;
   flex: none;
   width: calc(var(--full) + (var(--small) - var(--full)) * var(--p));
-  height: calc(68px - 12px * var(--p));
+  height: calc(74px - 12px * var(--p));
   padding: 0 calc(16px - 4px * var(--p)) 0 calc(24px - 8px * var(--p));
   background: rgba(255, 255, 255, calc(0.72 + 0.24 * var(--p)));
   border: 1px solid rgba(0, 67, 149, calc(0.10 * (1 - var(--p))));
@@ -373,8 +373,8 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   background: #004395;
   color: #fff;
@@ -437,7 +437,7 @@ html {
   position: absolute;
   top: 50%;
   left: 0;
-  height: 36px;
+  height: 42px;
   transform: translateX(0) translateY(-50%);
   width: 0;
   opacity: 0;
@@ -453,10 +453,10 @@ html {
 .fnav-link {
   position: relative;
   z-index: 1;
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 999px;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #424752;
   text-decoration: none;
@@ -486,7 +486,7 @@ html {
 .fnav-login {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #004395;
   text-decoration: none;
   position: relative;
@@ -692,10 +692,13 @@ html {
 
 .ac {
   /* Keep the preview compact and leave less of the neighboring cards behind it. */
-  --w: min(880px, 58vw);
+  --w: min(820px, 52vw);
+  --drag: 0;
   --primer: #004395;
   position: relative;
-  touch-action: pan-y;
+  /* Ambil alih gesture agar drag carousel tidak menunggu browser
+     menentukan apakah gesture tersebut scroll atau swipe. */
+  touch-action: none;
   user-select: none;
   cursor: grab;
   outline-offset: 6px;
@@ -703,6 +706,10 @@ html {
 
 .ac:active {
   cursor: grabbing;
+}
+
+.ac.is-dragging .ac-slide {
+  transition: none !important;
 }
 
 .ac:focus-visible {
@@ -725,11 +732,13 @@ html {
   width: var(--w);
   aspect-ratio: 16 / 10;
   margin-left: calc(var(--w) / -2);
-  transform: translateX(calc(var(--d) * 0.24 * var(--w)));
+  transform: translateX(calc((var(--d) * 0.24 + var(--drag)) * var(--w))) scale(var(--slide-scale, 1));
+  transform-origin: center;
+  will-change: transform;
   transition:
-    transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Active slide */
@@ -742,6 +751,7 @@ html {
 /* Neighbor slides */
 .ac-slide[data-d="-1"],
 .ac-slide[data-d="1"] {
+  --slide-scale: 0.82;
   z-index: 2;
   opacity: 0.5;
   filter: blur(1.5px);
@@ -761,7 +771,9 @@ html {
   height: 100%;
   border-radius: 14px;
   border: 1px solid #e2e8f0;
-  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 22px 30px -14px rgba(15, 23, 42, 0.38),
+    0 8px 18px rgba(15, 23, 42, 0.08);
   overflow: hidden;
 }
 

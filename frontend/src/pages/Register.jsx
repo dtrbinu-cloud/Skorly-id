@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth';
 
 export default function Register() {
-  const [role, setRole] = useState('murid');
   const [nama, setNama] = useState('Ahmad Farhan');
   const [email, setEmail] = useState('ahmad.farhan@sekolah.id');
   const [password, setPassword] = useState('rahasia123');
@@ -14,7 +13,7 @@ export default function Register() {
 
   const [emailError, setEmailError] = useState(false);
   const [confirmError, setConfirmError] = useState(false);
-  const [viewState, setViewState] = useState('form'); // 'form' | 'success-guru' | 'success-murid'
+  const [viewState, setViewState] = useState('form');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login } = useAuth();
@@ -48,11 +47,7 @@ export default function Register() {
 
     setTimeout(() => {
       setIsSubmitting(false);
-      if (role === 'guru') {
-        setViewState('success-guru');
-      } else {
-        setViewState('success-murid');
-      }
+      setViewState('success-murid');
     }, 600);
   };
 
@@ -178,41 +173,6 @@ export default function Register() {
                   </h2>
                   <p className="font-body-sm text-xs text-text-muted">
                   </p>
-                </div>
-
-                {/* Segmented Control Role Switcher */}
-                <div className="mb-2.5 sm:mb-3">
-                  <label className="block font-label-md text-xs text-on-surface mb-1">
-                    Daftar sebagai
-                  </label>
-                  <div className="grid grid-cols-2 p-1 rounded-lg bg-surface-container-high gap-1">
-                    {/* Tab Murid */}
-                    <button
-                      id="tab-murid"
-                      type="button"
-                      onClick={() => setRole('murid')}
-                      className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg font-label-md text-xs transition-all duration-200 font-semibold ${role === 'murid'
-                          ? 'bg-primary-container text-on-primary shadow-sm'
-                          : 'text-on-surface hover:bg-surface-card/60'
-                        }`}
-                    >
-                      <span className="material-symbols-outlined text-[16px]">school</span>
-                      <span>Murid</span>
-                    </button>
-                    {/* Tab Guru */}
-                    <button
-                      id="tab-guru"
-                      type="button"
-                      onClick={() => setRole('guru')}
-                      className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg font-label-md text-xs transition-all duration-200 font-semibold ${role === 'guru'
-                          ? 'bg-primary-container text-on-primary shadow-sm'
-                          : 'text-on-surface hover:bg-surface-card/60'
-                        }`}
-                    >
-                      <span className="material-symbols-outlined text-[16px]">cast_for_education</span>
-                      <span>Guru</span>
-                    </button>
-                  </div>
                 </div>
 
                 {/* Input Fields Form */}
@@ -361,25 +321,6 @@ export default function Register() {
                     )}
                   </div>
 
-                  {/* Guru Notice Amber Box */}
-                  {role === 'guru' && (
-                    <div
-                      className="p-2.5 rounded-lg bg-[#FFFBEB] text-[#B45309] flex items-start gap-1.5 animate-fadeIn"
-                      id="guru-notice-box"
-                    >
-                      <span
-                        className="material-symbols-outlined text-status-warning text-[17px] shrink-0 mt-0.5"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        info
-                      </span>
-                      <p className="font-body-sm text-[11.5px] leading-relaxed">
-                        Akun guru perlu disetujui admin sebelum bisa dipakai. Kamu akan bisa masuk
-                        setelah disetujui.
-                      </p>
-                    </div>
-                  )}
-
                   {/* Action Button: Buat Akun */}
                   <div className="pt-0.5">
                     <button
@@ -433,53 +374,7 @@ export default function Register() {
               </div>
             )}
 
-            {/* ================= CARD 2: SUKSES PENDAFTARAN GURU ================= */}
-            {viewState === 'success-guru' && (
-              <div
-                className="bg-surface-card rounded-xl p-6 sm:p-8 shadow-[0_4px_24px_-4px_rgba(15,42,92,0.08)] text-center flex flex-col items-center animate-fadeIn"
-                id="success-guru-card"
-              >
-                <div className="w-14 h-14 rounded-full bg-status-success/15 text-status-success flex items-center justify-center mx-auto mb-3.5">
-                  <span
-                    className="material-symbols-outlined text-[32px]"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    check_circle
-                  </span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFFBEB] text-[#B45309] font-label-sm text-xs mb-3">
-                  <span className="material-symbols-outlined text-[15px]">hourglass_top</span>
-                  <span>Menunggu Persetujuan</span>
-                </div>
-                <h2 className="font-headline-md text-xl font-bold text-on-surface mb-1.5">
-                  Pendaftaran berhasil
-                </h2>
-                <p className="font-body-sm text-xs sm:text-sm text-text-muted mb-4 max-w-sm leading-relaxed">
-                  Akunmu sedang menunggu persetujuan admin. Kami akan mengaktifkannya secepatnya.
-                </p>
-
-                <div className="w-full p-3.5 rounded-xl bg-surface-container-low text-left mb-4 space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-text-muted">Peran Akun:</span>
-                    <span className="font-label-md font-semibold text-on-surface">Guru</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-text-muted">Email Terdaftar:</span>
-                    <span className="font-label-md font-semibold text-on-surface">{email}</span>
-                  </div>
-                </div>
-
-                <Link
-                  to="/masuk"
-                  className="w-full h-10 sm:h-11 rounded-lg bg-primary-container text-on-primary font-label-md sm:font-label-lg text-xs sm:text-sm hover:bg-primary transition-all duration-150 shadow-sm flex items-center justify-center gap-2 font-semibold"
-                >
-                  <span className="material-symbols-outlined text-[17px]">arrow_back</span>
-                  <span>Kembali ke halaman masuk</span>
-                </Link>
-              </div>
-            )}
-
-            {/* ================= CARD 3: SUKSES PENDAFTARAN MURID ================= */}
+            {/* ================= CARD 2: SUKSES PENDAFTARAN MURID ================= */}
             {viewState === 'success-murid' && (
               <div
                 className="bg-surface-card rounded-xl p-6 sm:p-8 shadow-[0_4px_24px_-4px_rgba(15,42,92,0.08)] text-center flex flex-col items-center animate-fadeIn"

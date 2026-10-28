@@ -173,7 +173,6 @@ export const footerColumns = [
     title: 'Navigasi Utama',
     links: [
       { label: 'Portal Murid', href: '/masuk' },
-      { label: 'Dashboard Guru', href: '/masuk' },
       { label: 'Panduan Penggunaan', href: '#cara-kerja' },
       { label: 'Mulai Mengerjakan', href: '#simulasi' },
     ],
