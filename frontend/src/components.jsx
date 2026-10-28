@@ -10,7 +10,7 @@ export function Navbar(){
 export function Footer(){
   return <footer id="hubungi" className="foot"><div className="wrap foot-in">
     <div><Logo light/><p>Platform ujian pilihan ganda online. Guru unggah soal, murid kerjakan dengan token, nilai keluar otomatis.</p></div>
-    <div><h4>Untuk</h4><a href="/daftar">Guru</a><a href="/daftar">Murid</a><a href="/masuk">Admin sekolah</a></div>
+    <div><h4>Untuk</h4><a href="/daftar">Murid</a><a href="/masuk">Admin sekolah</a></div>
     <div><h4>Fitur</h4><a href="/#fitur">Unggah Excel dan PDF</a><a href="/#fitur">Ruang dengan token</a><a href="/#fitur">Ekspor nilai</a></div>
     <div><h4>Hubungi kami</h4><p>halo@skorly.id</p></div></div>
     <div className="copy">© 2026 Skorly.id. Semua hak dilindungi.</div></footer>

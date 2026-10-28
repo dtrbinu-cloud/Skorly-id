@@ -6,7 +6,7 @@ export default function Hero() {
     <section
       id="beranda"
       className="landing-hero relative w-full min-h-screen overflow-hidden pt-12 pb-20 md:pt-16 md:pb-24"
-      style={{ background: '#f3f6fb', paddingTop: '180px' }}
+      style={{ background: '#f3f6fb', paddingTop: '190px' }}
     >
       {/* Subtle Polygon Geometric Background Elements */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -28,7 +28,7 @@ export default function Hero() {
         </svg>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-margin-desktop">
+      <div className="relative max-w-[1410px] mx-auto px-margin-desktop">
         <div className="grid grid-cols-12 gap-gutter-desktop items-center">
           {/* Left Hero Column (7 Cols) */}
           <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-space-lg">
