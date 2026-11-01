@@ -120,6 +120,7 @@ export default function AlurCarousel() {
   const sx = useRef(null);
   const moved = useRef(false);
   const dragWidth = useRef(0);
+  const releaseRaf = useRef(null);
 
   const [a, setA] = useState(0);
   const [inView, setInView] = useState(true);
@@ -165,8 +166,50 @@ export default function AlurCarousel() {
     };
   }, []);
 
+  /* ── Cleanup release animation on unmount ────────────────────── */
+  useEffect(() => {
+    return () => {
+      if (releaseRaf.current) cancelAnimationFrame(releaseRaf.current);
+    };
+  }, []);
+
+  /* ── Smooth drag release helper ──────────────────────────────── */
+  const animateRelease = useCallback((el) => {
+    // Cancel any ongoing release animation
+    if (releaseRaf.current) cancelAnimationFrame(releaseRaf.current);
+
+    // Add releasing class for CSS transition
+    el.classList.add('is-releasing');
+    el.style.setProperty('--drag', '0');
+
+    // Remove is-releasing after transition completes
+    const cleanup = () => {
+      el.classList.remove('is-releasing');
+    };
+    // Use transitionend for precise cleanup
+    const onEnd = (e) => {
+      if (e.propertyName === 'transform') {
+        el.removeEventListener('transitionend', onEnd);
+        cleanup();
+      }
+    };
+    el.addEventListener('transitionend', onEnd);
+    // Fallback timeout in case transitionend doesn't fire
+    releaseRaf.current = setTimeout(() => {
+      el.removeEventListener('transitionend', onEnd);
+      cleanup();
+    }, 600);
+  }, []);
+
   /* ── Pointer (mouse + touch) swipe ───────────────────────────── */
   const onDown = (e) => {
+    // Cancel any ongoing release animation
+    if (releaseRaf.current) {
+      cancelAnimationFrame(releaseRaf.current);
+      clearTimeout(releaseRaf.current);
+    }
+    root.current?.classList.remove('is-releasing');
+
     sx.current = e.clientX;
     moved.current = false;
     dragWidth.current = parseFloat(getComputedStyle(e.currentTarget).getPropertyValue('--w')) || 0;
@@ -183,18 +226,30 @@ export default function AlurCarousel() {
 
   const onUp = (e) => {
     if (sx.current == null) return;
+    const el = root.current;
     const dx = e.clientX - sx.current;
     sx.current = null;
-    root.current?.style.setProperty('--drag', '0');
-    root.current?.classList.remove('is-dragging');
+
+    el?.classList.remove('is-dragging');
+
     if (Math.abs(dx) > 5) moved.current = true;
-    if (Math.abs(dx) > 50) go(a + (dx < 0 ? 1 : -1));
+
+    if (Math.abs(dx) > 50) {
+      // Navigating to next/prev — let the CSS transition handle the slide change
+      // and smoothly reset drag to 0
+      go(a + (dx < 0 ? 1 : -1));
+      if (el) animateRelease(el);
+    } else {
+      // Snap back — smoothly animate drag back to 0
+      if (el) animateRelease(el);
+    }
   };
 
   const onCancel = () => {
     sx.current = null;
-    root.current?.style.setProperty('--drag', '0');
-    root.current?.classList.remove('is-dragging');
+    const el = root.current;
+    el?.classList.remove('is-dragging');
+    if (el) animateRelease(el);
   };
 
   /* ── Render ──────────────────────────────────────────────────── */
