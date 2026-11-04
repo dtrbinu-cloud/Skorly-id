@@ -6,7 +6,6 @@ import { Login, Register } from './pages/Auth';
 import { MuridDash, Hasil } from './pages/Murid';
 import { GuruDash } from './pages/Guru';
 import GuruDashboard from './pages/GuruDashboard';
-import Admin from './pages/Admin';
 import { Profil, Pengaturan } from './pages/Akun';
 import ExamPage from './exam/ExamPage';
 import UnggahSoal from './pages/guru/UnggahSoal';
@@ -31,7 +30,6 @@ export default function App() {
         <Route path="/guru/ruang/:id" element={<Guard role="guru"><GuruDashboard /></Guard>} />
         <Route path="/guru/buat" element={<Guard role="guru"><UnggahSoal /></Guard>} />
         <Route path="/guru/buat/periksa" element={<Guard role="guru"><PeriksaSoal /></Guard>} />
-        <Route path="/admin" element={<Guard role="admin"><Admin /></Guard>} />
         <Route path="/profil" element={<Profil />} />
         <Route path="/pengaturan" element={<Pengaturan />} />
       </Route>
