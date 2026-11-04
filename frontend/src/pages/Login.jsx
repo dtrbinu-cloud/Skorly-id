@@ -19,12 +19,6 @@ export default function Login() {
     setScreenState('loading');
 
     setTimeout(() => {
-      // Jika email mengandung "pending", tampilkan state pending
-      if (email.toLowerCase().includes('pending')) {
-        setScreenState('pending');
-        return;
-      }
-
       // Jika email salah atau sengaja error
       if (email.toLowerCase().includes('salah') || !email || !password) {
         setScreenState('error');
@@ -187,23 +181,6 @@ export default function Login() {
               </div>
             )}
 
-            {/* 2. Pending Teacher Banner */}
-            {screenState === 'pending' && (
-              <div
-                className="mb-3.5 p-3 rounded-lg bg-[#FFFBEB] text-[#92400E] shadow-xs"
-                id="banner-pending"
-              >
-                <div className="flex items-start gap-2">
-                  <span className="material-symbols-outlined text-[18px] text-status-warning shrink-0 mt-0.5">
-                    hourglass_top
-                  </span>
-                  <div className="font-body-sm text-xs sm:text-sm text-[#92400E] leading-snug">
-                    Akunmu sedang menunggu verifikasi admin. Kamu bisa masuk setelah disetujui.
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Login Form */}
             <form className="space-y-3 sm:space-y-4" noValidate onSubmit={handleFormSubmit}>
               {/* Email Input Group */}
@@ -307,10 +284,6 @@ export default function Login() {
                     Ingat saya di perangkat ini
                   </span>
                 </label>
-                <span className="inline-flex items-center gap-1 font-label-sm text-[11px] sm:text-xs text-status-success">
-                  <span className="material-symbols-outlined text-[14px]">verified_user</span>
-                  SSO Aktif
-                </span>
               </div>
 
               {/* Submit Button */}
