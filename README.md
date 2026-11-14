@@ -1,6 +1,6 @@
 # Skorly.id
 
-**Dari soal, langsung jadi nilai.** — Platform ujian online yang membantu guru menyiapkan ujian dalam satu ruang. Murid masuk dengan token, jawaban dinilai otomatis, dan hasilnya langsung siap dibaca.
+**Skorly.id adalah web platform Dari soal, langsung jadi nilai.** — Platform ujian online yang membantu guru menyiapkan ujian dalam satu ruang. Murid masuk dengan token, jawaban dinilai otomatis, dan hasilnya langsung siap dibaca.
 
 ## 📸 Preview
 
