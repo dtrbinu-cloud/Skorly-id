@@ -1,0 +1,13 @@
+const express = require('express');
+const controller = require('../controllers/authController');
+const { requireAuth } = require('../middleware/auth');
+const { register, credentials, profile, password } = require('../validators/authValidator');
+const { validate } = require('../validators/validate');
+const router = express.Router();
+router.post('/register', register, validate, controller.register);
+router.post('/login', credentials, validate, controller.login);
+router.post('/logout', controller.logout);
+router.get('/me', requireAuth, controller.me);
+router.patch('/me', requireAuth, profile, validate, controller.updateProfile);
+router.patch('/password', requireAuth, password, validate, controller.changePassword);
+module.exports = router;

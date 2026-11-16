@@ -1,0 +1,15 @@
+const express = require('express');
+const controller = require('../controllers/roomController');
+const { requireAuth, requireRole } = require('../middleware/auth');
+const { createRoom } = require('../validators/roomValidator');
+const { validate } = require('../validators/validate');
+const router = express.Router();
+router.get('/', requireAuth, requireRole('guru'), controller.list);
+router.get('/token/:token', controller.byToken);
+router.post('/', requireAuth, requireRole('guru'), createRoom, validate, controller.create);
+router.get('/:roomId', requireAuth, controller.detail);
+router.patch('/:roomId/close', requireAuth, requireRole('guru'), controller.close);
+router.post('/:roomId/attempts', requireAuth, requireRole('murid'), controller.startAttempt);
+router.patch('/:roomId/attempts/:attemptId', requireAuth, requireRole('murid'), controller.saveAnswers);
+router.post('/:roomId/attempts/:attemptId/submit', requireAuth, requireRole('murid'), controller.submit);
+module.exports = router;
