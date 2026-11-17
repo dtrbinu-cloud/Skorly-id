@@ -20,7 +20,8 @@ const menu={
  guru:[['/guru','Ruang saya'],['/guru/buat','Buat ruang'],['/profil','Profil'],['/pengaturan','Pengaturan']],
 }
 export function Shell(){
-  const {user,logout}=useAuth(),go=useNavigate(),location=useLocation()
+  const {user,loading,logout}=useAuth(),go=useNavigate(),location=useLocation()
+  if(loading) return <div className="loading-screen">Memuat sesi...</div>
   if(!user) return <Navigate to="/masuk" replace/>
   if(user.role==='murid') return <div className="student-shell">
     <header className="student-topbar"><Logo/><div className="student-topbar-actions"><span className="student-user-name">{user.nama}</span><button onClick={()=>{logout();go('/')}}>Keluar</button></div></header>
@@ -33,5 +34,5 @@ export function Shell(){
     <div className="who"><b>{user.nama}</b><span>{user.role}</span></div></aside>
     <main><Outlet/></main></div>
 }
-export const Guard=({role,children})=>{const {user}=useAuth();return user&&user.role!==role?<Navigate to={'/'+user.role} replace/>:children}
+export const Guard=({role,children})=>{const {user,loading}=useAuth();if(loading)return <div className="loading-screen">Memuat sesi...</div>;return !user?<Navigate to="/masuk" replace/>:user.role!==role?<Navigate to={'/'+user.role} replace/>:children}
 export const Stat=({n,t})=><div className="stat"><b>{n}</b><span>{t}</span></div>

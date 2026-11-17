@@ -31,8 +31,11 @@ psql "$DATABASE_URL" -f database/schema.sql
 
 Endpoint utama:
 
-- `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`
+- `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`
 - `GET/PATCH /api/auth/me`, `PATCH /api/auth/password`
-- `GET/POST /api/rooms`, `GET /api/rooms/token/:token`
+- `GET/POST /api/rooms`, `GET /api/rooms/token/:token`, `POST /api/rooms/join`
 - `PATCH /api/rooms/:roomId/close`
-- `POST/PATCH /api/rooms/:roomId/attempts...`
+- `GET/PATCH/POST /api/attempts/:attemptId...` menggunakan `X-Attempt-Token`
+
+Peserta ujian tidak membuat akun. Mereka mengisi nama pada `POST /api/rooms/join`,
+lalu menerima attempt token sementara untuk mengakses soal, autosave, dan submit.

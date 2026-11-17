@@ -12,27 +12,19 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (screenState === 'loading') return;
 
     setScreenState('loading');
 
-    setTimeout(() => {
-      // Jika email salah atau sengaja error
-      if (email.toLowerCase().includes('salah') || !email || !password) {
-        setScreenState('error');
-        return;
-      }
-
-      // Login default berhasil -> arahkan ke dashboard yang sesuai
-      if (login) {
-        const u = login(email);
-        navigate('/' + (u?.role || 'murid'));
-      } else {
-        setScreenState('default');
-      }
-    }, 1000);
+    try {
+      if (!email || !email.includes('@') || password.length < 8) throw new Error('VALIDATION_ERROR');
+      const u = await login(email, password);
+      navigate('/' + (u?.role || 'murid'));
+    } catch {
+      setScreenState('error');
+    }
   };
 
   return (

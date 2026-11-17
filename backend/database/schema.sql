@@ -1,7 +1,7 @@
 -- Skorly.id PostgreSQL schema
 -- Jalankan dengan: psql "$DATABASE_URL" -f database/schema.sql
 
-CREATE TYPE user_role AS ENUM ('murid', 'guru', 'admin');
+CREATE TYPE user_role AS ENUM ('guru');
 CREATE TYPE user_status AS ENUM ('aktif', 'menunggu', 'ditolak', 'nonaktif');
 CREATE TYPE source_type AS ENUM ('pdf', 'xlsx', 'csv');
 CREATE TYPE set_status AS ENUM ('draf', 'siap');
@@ -21,12 +21,10 @@ CREATE TABLE users (
   role user_role NOT NULL DEFAULT 'murid',
   status user_status NOT NULL DEFAULT 'aktif',
   sekolah VARCHAR(150),
-  disetujui_oleh BIGINT REFERENCES users(id) ON DELETE SET NULL,
-  disetujui_pada TIMESTAMPTZ,
   last_login_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  CONSTRAINT guru_sekolah_check CHECK (role <> 'guru' OR sekolah IS NOT NULL OR status = 'menunggu')
+  CONSTRAINT guru_sekolah_check CHECK (role = 'guru')
 );
 
 CREATE TABLE refresh_tokens (
@@ -154,7 +152,9 @@ CREATE TABLE token_percobaan (
 CREATE TABLE attempts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   room_id BIGINT NOT NULL REFERENCES rooms(id) ON DELETE RESTRICT,
-  murid_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+  murid_id BIGINT REFERENCES users(id) ON DELETE RESTRICT,
+  guest_name VARCHAR(100),
+  guest_token_hash VARCHAR(255) UNIQUE,
   percobaan_ke SMALLINT NOT NULL DEFAULT 1 CHECK (percobaan_ke > 0),
   status attempt_status NOT NULL DEFAULT 'berjalan',
   mulai_pada TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -166,7 +166,8 @@ CREATE TABLE attempts (
   salah INT,
   total_soal INT,
   durasi_detik INT,
-  UNIQUE (room_id, murid_id, percobaan_ke)
+  UNIQUE (room_id, murid_id, percobaan_ke),
+  CONSTRAINT participant_check CHECK ((murid_id IS NOT NULL AND guest_name IS NULL AND guest_token_hash IS NULL) OR (murid_id IS NULL AND guest_name IS NOT NULL AND guest_token_hash IS NOT NULL))
 );
 
 CREATE TABLE answers (

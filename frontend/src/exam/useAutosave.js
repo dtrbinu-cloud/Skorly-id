@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { apiFetch } from '../lib/api';
 
 /**
  * Hook untuk mengelola penyimpanan otomatis jawaban ujian.
@@ -74,8 +75,10 @@ export default function useAutosave({
         // Belum ada backend: simulasikan penyimpanan hanya di memori.
         await new Promise((res) => setTimeout(res, 250));
       } else {
-        // Backend belum tersedia. Tandai berhasil secara lokal di memori.
-        await new Promise((res) => setTimeout(res, 150));
+        await apiFetch(`/attempts/${encodeURIComponent(attemptId)}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ answers: { [payload.questionId]: payload.pilihan } }),
+        });
       }
 
       // Berhasil: hapus dari antrean

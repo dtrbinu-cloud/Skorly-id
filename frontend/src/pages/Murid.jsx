@@ -1,18 +1,20 @@
 import {useEffect,useState} from 'react'
-import {useNavigate,useSearchParams} from 'react-router-dom'
+import {useNavigate,useSearchParams,useParams} from 'react-router-dom'
 import {rooms,soalUjian} from '../data'
-import {useAuth} from '../auth'
 import {Stat} from '../components'
+import {apiFetch,setAttemptToken} from '../lib/api'
 
 const normalizeToken=value=>value.replace(/[^a-z0-9]/gi,'').toUpperCase()
 
 export function MuridDash(){
-  const [q]=useSearchParams(),initial=normalizeToken(q.get('token')||'').slice(0,6),[chars,setChars]=useState([...initial,...Array(6-initial.length).fill('')]),[error,setError]=useState(''),go=useNavigate(),{user}=useAuth()
-  const token=chars.join(''),submit=(value=token)=>{
+  const [q]=useSearchParams(),params=useParams(),initial=normalizeToken(params.token||q.get('token')||'').slice(0,6),[chars,setChars]=useState([...initial,...Array(6-initial.length).fill('')]),[nama,setNama]=useState(''),[error,setError]=useState(''),go=useNavigate()
+  const token=chars.join(''),submit=async(value=token)=>{
     const input=normalizeToken(value)
-    const room=rooms.find(item=>normalizeToken(item.token)===input&&item.status==='Buka')
-    if(!room){setError('Token tidak ditemukan atau ruang ujian sudah ditutup.');return}
-    go(`/kerjakan/att-${room.id}`)
+    try {
+      const result=await apiFetch('/rooms/join',{method:'POST',body:JSON.stringify({token:input,nama})},false)
+      setAttemptToken(result.data.attemptToken)
+      go(`/kerjakan/${result.data.attempt.id}`)
+    } catch { setError('Token tidak ditemukan atau ruang ujian sudah ditutup.') }
   }
   const updateChar=(index,value)=>{
     const clean=value.toUpperCase().replace(/[^A-Z0-9]/g,'')
@@ -36,10 +38,12 @@ export function MuridDash(){
     if(pasted.length===6)setTimeout(()=>submit(pasted),0)
   }
   return <div className="student-entry">
-    <div className="student-greeting"><h1>Halo, {user?.nama||'Siswa'}</h1><span className="chip">Siswa Aktif</span></div>
+    <div className="student-greeting"><h1>Masuk ruang ujian</h1><span className="chip">Peserta</span></div>
     <section className="panel student-token-card">
       <p className="eyebrow">AKSES EVALUASI CBT</p><h2>Masukkan Token Ruang</h2>
       <p className="small">Masukkan 6 karakter token unik dari pengawas ruang atau guru untuk memulai.</p>
+      <label className="small" htmlFor="guest-name">Nama peserta</label>
+      <input id="guest-name" value={nama} onChange={e=>setNama(e.target.value)} placeholder="Masukkan nama lengkap" required />
       <form className="student-token-form" onSubmit={e=>{e.preventDefault();submit()}}>
         <div className="token-inputs" role="group" aria-label="Token ruang">
           {chars.slice(0,3).map((char,index)=><input key={index} data-token-index={index} value={char} onChange={e=>updateChar(index,e.target.value)} onKeyDown={e=>handleKeyDown(index,e)} onPaste={handlePaste} maxLength={1} autoFocus={index===0&&!token} aria-label={`Karakter ${index+1} dari 6`}/>)}
@@ -55,12 +59,12 @@ export function MuridDash(){
 
 const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`
 export function Ujian(){
-  const [q]=useSearchParams(),go=useNavigate(),{user}=useAuth(),token=q.get('token')||'',room=rooms.find(item=>normalizeToken(item.token)===normalizeToken(token)&&item.status==='Buka')
+  const [q]=useSearchParams(),go=useNavigate(),token=q.get('token')||'',room=rooms.find(item=>normalizeToken(item.token)===normalizeToken(token)&&item.status==='Buka')
   const [i,setI]=useState(0),[a,setA]=useState({}),[s,setS]=useState(5400),[saved,setSaved]=useState(true)
-  useEffect(()=>{if(!user)go('/masuk',{replace:true});else if(!room)go('/murid',{replace:true})},[go,room,user])
+  useEffect(()=>{if(!room)go('/murid',{replace:true})},[go,room])
   useEffect(()=>{const id=setInterval(()=>setS(x=>Math.max(0,x-1)),1000);return()=>clearInterval(id)},[])
   useEffect(()=>{if(s===0)go('/hasil')},[s])
-  if(!user||!room)return null
+  if(!room)return null
   const question=soalUjian[i],pick=k=>{setA({...a,[question.id]:k});setSaved(false);setTimeout(()=>setSaved(true),600)}
   const done=Object.keys(a).length
   return <div className="exam"><header className="exam-bar"><b>{room.judul}</b>
