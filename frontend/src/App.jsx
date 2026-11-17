@@ -22,10 +22,10 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/daftar" element={<Register />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/murid" element={<MuridDash />} />
+      <Route path="/hasil" element={<Hasil />} />
 
       <Route element={<Shell />}>
-        <Route path="/murid" element={<Guard role="murid"><MuridDash /></Guard>} />
-        <Route path="/hasil" element={<Guard role="murid"><Hasil /></Guard>} />
         <Route path="/guru" element={<Guard role="guru"><GuruDashboard /></Guard>} />
         <Route path="/guru/ruang/:id" element={<Guard role="guru"><GuruDashboard /></Guard>} />
         <Route path="/guru/buat" element={<Guard role="guru"><UnggahSoal /></Guard>} />
@@ -33,6 +33,8 @@ export default function App() {
         <Route path="/profil" element={<Profil />} />
         <Route path="/pengaturan" element={<Pengaturan />} />
       </Route>
+
+      <Route path="/ruang/:token" element={<MuridDash />} />
 
       {/* Rute pengerjaan ujian murid dengan attemptId (tanpa token di URL) */}
       <Route path="/kerjakan/:attemptId" element={<ExamPage />} />

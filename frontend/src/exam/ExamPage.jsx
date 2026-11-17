@@ -6,6 +6,7 @@ import Palette from './Palette';
 import ConfirmSubmit from './ConfirmSubmit';
 import useExamTimer from './useExamTimer';
 import useAutosave from './useAutosave';
+import { apiFetch } from '../lib/api';
 
 export default function ExamPage({ mode = 'student' }) {
   const { attemptId = 'demo-1' } = useParams();
@@ -102,24 +103,18 @@ export default function ExamPage({ mode = 'student' }) {
 
     try {
       // Panggilan API riil
-      const res = await fetch(`/attempts/${encodeURIComponent(attemptId)}`);
-
-      if (!res.ok) {
-        // Jika server API belum siap, fallback ke data room dan soalUjian lokal
-        throw new Error(`HTTP ${res.status}`);
-      }
-
-      const data = await res.json();
+      const payload = await apiFetch(`/attempts/${encodeURIComponent(attemptId)}`);
+      const data = payload.data;
 
       // Jika sudah dikumpulkan sebelumnya, arahkan langsung ke halaman hasil
-      if (data.status === 'submitted' || data.status === 'selesai') {
+      if (data.attempt?.status === 'submitted' || data.attempt?.status === 'selesai') {
         navigate('/hasil', { replace: true });
         return;
       }
 
       setQuestions(data.questions || soalUjian);
       setRoomInfo(data.room || rooms[0]);
-      setAnswers(data.answers || {});
+      setAnswers(data.attempt?.answers || {});
       setFlags(data.flags || {});
       if (typeof data.lastIndex === 'number') {
         setCurrentIndex(data.lastIndex);
@@ -132,6 +127,11 @@ export default function ExamPage({ mode = 'student' }) {
       }
       setIsLoading(false);
     } catch (err) {
+      if (!isDemo) {
+        setLoadError(err.message || 'Gagal memuat ujian.');
+        setIsLoading(false);
+        return;
+      }
       // Toleransi fallback: jika backend belum hidup atau rute demo dipanggil murid
       const matchedRoom = rooms[0];
       const now = Date.now();
@@ -322,10 +322,13 @@ export default function ExamPage({ mode = 'student' }) {
   const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Simulasi submit sementara: tidak ada request backend dan tidak ada
-      // penyimpanan hasil ke browser.
       if (isDemo) {
         await new Promise((r) => setTimeout(r, 600));
+      } else {
+        await apiFetch(`/attempts/${encodeURIComponent(attemptId)}/submit`, {
+          method: 'POST',
+          body: JSON.stringify({ answers }),
+        });
       }
       navigate('/hasil');
     } catch {

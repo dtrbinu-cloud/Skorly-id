@@ -6,6 +6,7 @@ const { validate } = require('../validators/validate');
 const router = express.Router();
 router.post('/register', register, validate, controller.register);
 router.post('/login', credentials, validate, controller.login);
+router.post('/refresh', controller.refresh);
 router.post('/logout', controller.logout);
 router.get('/me', requireAuth, controller.me);
 router.patch('/me', requireAuth, profile, validate, controller.updateProfile);

@@ -73,14 +73,16 @@ dan `422` untuk validasi.
 
 ## Aturan fitur Skorly
 
-- Role yang tersedia: `murid`, `guru`, dan `admin`.
+- Role akun yang tersedia: `guru`. Peserta ujian tidak membuat akun.
 - Guru membuat bank soal dan ruang ujian.
-- Murid masuk ruang memakai token 6 karakter.
+- Guru membagikan link/token ruang.
+- Peserta mengisi nama pada halaman ruang lalu langsung membuat guest attempt.
+- Peserta tidak memiliki dashboard dan tidak perlu membuat akun untuk ruang berikutnya.
 - Penilaian dilakukan server-side saat attempt dikumpulkan.
 - Answer key tidak boleh dikirim ke client sebelum attempt selesai dan hasil memang boleh dilihat.
 - Autosave jawaban harus idempotent dan hanya boleh mengubah attempt milik murid yang sedang login.
 - Guru hanya boleh mengakses question set, room, dan hasil miliknya sendiri.
-- Endpoint admin harus memiliki middleware role/permission khusus.
+- Data attempt peserta harus dilindungi dengan attempt token/session khusus, bukan akun murid.
 
 ## Sebelum menyelesaikan perubahan
 

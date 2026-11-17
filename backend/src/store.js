@@ -3,7 +3,7 @@ const path = require('path');
 
 const dataDir = path.join(__dirname, '..', 'data');
 const dbFile = path.join(dataDir, 'db.json');
-const emptyDb = { users: [], rooms: [], attempts: [] };
+const emptyDb = { users: [], rooms: [], attempts: [], refreshTokens: [], loginAttempts: [] };
 
 function readDb() {
   fs.mkdirSync(dataDir, { recursive: true });

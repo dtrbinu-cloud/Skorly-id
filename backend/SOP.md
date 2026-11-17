@@ -17,6 +17,7 @@ routes -> controllers -> validators -> services -> repositories -> resources
 - Resource menentukan bentuk response publik; password, answer key, dan field internal tidak boleh keluar.
 - Semua response memakai `{ data, message, meta }`.
 - Semua error diproses oleh error middleware dengan format `{ error: { code, message, details } }`.
+- Akun hanya dibuat untuk guru; peserta ujian menggunakan guest attempt yang terikat ke room.
 - Data tidak dihapus secara hard delete; gunakan `deletedAt`/status nonaktif.
 - Foreign key tidak memakai cascade delete/update. Penghapusan relasi harus ditangani service secara eksplisit.
 

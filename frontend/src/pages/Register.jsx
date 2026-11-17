@@ -16,7 +16,7 @@ export default function Register() {
   const [viewState, setViewState] = useState('form');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { login } = useAuth();
+  const { login, register } = useAuth();
   const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
@@ -44,20 +44,14 @@ export default function Register() {
     if (hasError) return;
 
     setIsSubmitting(true);
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setViewState('success-murid');
-    }, 600);
+    register(nama, email, password)
+      .then(() => setViewState('success-murid'))
+      .catch((error) => { if (error.code === 'EMAIL_EXISTS') setEmailError(true); })
+      .finally(() => setIsSubmitting(false));
   };
 
-  const handleMuridLoginNow = () => {
-    if (login) {
-      login(email, nama);
-      navigate('/murid');
-    } else {
-      navigate('/masuk');
-    }
+  const handleMuridLoginNow = async () => {
+    try { await login(email, password); navigate('/guru'); } catch { navigate('/masuk'); }
   };
 
   return (
@@ -390,13 +384,13 @@ export default function Register() {
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-primary font-label-sm text-xs mb-3">
                   <span className="material-symbols-outlined text-[15px]">school</span>
-                  <span>Akun Murid Aktif</span>
+                  <span>Akun Guru Aktif</span>
                 </div>
                 <h2 className="font-headline-md text-xl font-bold text-on-surface mb-1.5">
                   Akun berhasil dibuat
                 </h2>
                 <p className="font-body-sm text-xs sm:text-sm text-text-muted mb-4 max-w-sm leading-relaxed">
-                  Sekarang kamu bisa masuk dan memasukkan token ujian.
+                  Sekarang kamu bisa masuk dan membuat ruang ujian untuk dibagikan kepada peserta.
                 </p>
 
                 <div className="w-full p-3.5 rounded-xl bg-surface-container-low text-left mb-4 flex items-center gap-3">
@@ -408,7 +402,7 @@ export default function Register() {
                       Siapkan Token CBT
                     </p>
                     <p className="font-body-sm text-xs text-text-muted">
-                      Minta 6 digit token ruang tes kepada guru pembimbing.
+                      Buat ruang ujian, lalu bagikan link atau tokennya kepada peserta.
                     </p>
                   </div>
                 </div>
@@ -418,7 +412,7 @@ export default function Register() {
                   onClick={handleMuridLoginNow}
                   className="w-full h-10 sm:h-11 rounded-lg bg-primary-container text-on-primary font-label-md sm:font-label-lg text-xs sm:text-sm hover:bg-primary transition-all duration-150 shadow-sm flex items-center justify-center gap-2 font-semibold"
                 >
-                  <span>Masuk sekarang</span>
+                  <span>Masuk ke akun guru</span>
                   <span className="material-symbols-outlined text-[17px]">login</span>
                 </button>
               </div>
