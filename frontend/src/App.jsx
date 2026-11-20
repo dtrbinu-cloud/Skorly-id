@@ -26,10 +26,10 @@ export default function App() {
       <Route path="/hasil" element={<Hasil />} />
 
       <Route element={<Shell />}>
-        <Route path="/guru" element={<Guard role="guru"><GuruDashboard /></Guard>} />
-        <Route path="/guru/ruang/:id" element={<Guard role="guru"><GuruDashboard /></Guard>} />
-        <Route path="/guru/buat" element={<Guard role="guru"><UnggahSoal /></Guard>} />
-        <Route path="/guru/buat/periksa" element={<Guard role="guru"><PeriksaSoal /></Guard>} />
+        <Route path="/guru" element={<Guard><GuruDashboard /></Guard>} />
+        <Route path="/guru/ruang/:id" element={<Guard><GuruDashboard /></Guard>} />
+        <Route path="/guru/buat" element={<Guard><UnggahSoal /></Guard>} />
+        <Route path="/guru/buat/periksa" element={<Guard><PeriksaSoal /></Guard>} />
         <Route path="/profil" element={<Profil />} />
         <Route path="/pengaturan" element={<Pengaturan />} />
       </Route>

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const publicUser = ({ passwordHash, ...user }) => user;
+const publicUser = ({ passwordHash, role, ...user }) => user;
 const id = () => crypto.randomUUID();
 const token = () => {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

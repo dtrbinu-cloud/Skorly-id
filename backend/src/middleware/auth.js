@@ -4,7 +4,7 @@ const { readDb } = require('../store');
 const secret = () => process.env.JWT_SECRET || 'dev-only-change-this-secret';
 
 function signUser(user) {
-  return jwt.sign({ sub: user.id, role: user.role }, secret(), { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
+  return jwt.sign({ sub: user.id }, secret(), { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
 }
 
 function requireAuth(req, res, next) {
@@ -22,10 +22,4 @@ function requireAuth(req, res, next) {
   }
 }
 
-function requireRole(...roles) {
-  return (req, res, next) => roles.includes(req.user.role)
-    ? next()
-    : res.status(403).json({ message: 'Anda tidak memiliki akses ke fitur ini.' });
-}
-
-module.exports = { signUser, requireAuth, requireRole };
+module.exports = { signUser, requireAuth };

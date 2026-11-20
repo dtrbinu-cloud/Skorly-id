@@ -21,7 +21,7 @@ export default function Login() {
     try {
       if (!email || !email.includes('@') || password.length < 8) throw new Error('VALIDATION_ERROR');
       const u = await login(email, password);
-      navigate('/' + (u?.role || 'murid'));
+      navigate('/guru');
     } catch {
       setScreenState('error');
     }

@@ -1,10 +1,19 @@
 const { id, token } = require('../utils');
 const crypto = require('crypto');
 const repository = require('../repositories/roomRepository');
+const questionSetService = require('./questionSetService');
 const { AppError } = require('../http/errors');
 function uniqueToken() { let value; do { value = token(); } while (repository.tokenExists(value)); return value; }
-function listRooms(guruId) { return repository.listByGuru(guruId); }
-function createRoom(guruId, input) { return repository.create({ id: id(), guruId, judul: input.judul.trim(), jenis: input.jenis || 'Ulangan', token: uniqueToken(), questions: input.questions, answerKey: input.answerKey || {}, durasiMenit: Number(input.durasiMenit || 30), acak: Boolean(input.acak), bahas: Boolean(input.bahas), status: 'open', createdAt: new Date().toISOString() }); }
+function listRooms(userId) { return repository.listByUser(userId); }
+function createRoom(userId, input) {
+  const snapshot = input.questionSetId
+    ? questionSetService.snapshotForRoom(input.questionSetId, userId)
+    : input.questions?.length
+      ? { questions: input.questions, answerKey: input.answerKey || {} }
+      : null;
+  if (!snapshot) throw new AppError(422, 'QUESTION_SOURCE_REQUIRED', 'questionSetId wajib diisi untuk membuat ruang.');
+  return repository.create({ id: id(), userId, ...(snapshot.questionSetId ? { questionSetId: snapshot.questionSetId } : {}), judul: input.judul.trim(), jenis: input.jenis || 'Ulangan', token: uniqueToken(), questions: snapshot.questions, answerKey: snapshot.answerKey, durasiMenit: Number(input.durasiMenit || 30), acak: Boolean(input.acak), bahas: Boolean(input.bahas), status: 'open', createdAt: new Date().toISOString() });
+}
 function findRoom(roomId) { const room = repository.findById(roomId); if (!room) throw new AppError(404, 'ROOM_NOT_FOUND', 'Ruang tidak ditemukan.'); return room; }
 function findOpenByToken(value) { const room = repository.findByToken(value.toUpperCase()); if (!room || room.status !== 'open') throw new AppError(404, 'ROOM_NOT_FOUND', 'Token ruang tidak ditemukan atau ruang sudah ditutup.'); return room; }
 function joinRoom(tokenValue, studentId) { const room = findOpenByToken(tokenValue); return startAttempt(room.id, studentId); }
@@ -16,7 +25,7 @@ function submitGuestAttempt(attemptId, rawToken, answers) { const detail = getGu
 function getAttempt(attemptId, studentId) { const attempt = repository.findAttempt(attemptId); if (!attempt || attempt.studentId !== studentId) throw new AppError(404, 'ATTEMPT_NOT_FOUND', 'Attempt tidak ditemukan.'); const room = findRoom(attempt.roomId); return { attempt, room: { ...room, answerKey: undefined }, questions: room.questions }; }
 function saveAttemptDirect(attemptId, studentId, answers) { const attempt = repository.findAttempt(attemptId); if (!attempt) throw new AppError(404, 'ATTEMPT_NOT_FOUND', 'Attempt tidak ditemukan.'); return saveAnswers(attempt.roomId, attemptId, studentId, answers); }
 function submitAttemptDirect(attemptId, studentId, answers) { const attempt = repository.findAttempt(attemptId); if (!attempt) throw new AppError(404, 'ATTEMPT_NOT_FOUND', 'Attempt tidak ditemukan.'); return submitAttempt(attempt.roomId, attemptId, studentId, answers); }
-function closeRoom(roomId, guruId) { const room = findRoom(roomId); if (room.guruId !== guruId) throw new AppError(404, 'ROOM_NOT_FOUND', 'Ruang tidak ditemukan.'); return repository.update(roomId, { status: 'closed', closedAt: new Date().toISOString() }); }
+function closeRoom(roomId, userId) { const room = findRoom(roomId); if ((room.userId || room.guruId) !== userId) throw new AppError(404, 'ROOM_NOT_FOUND', 'Ruang tidak ditemukan.'); return repository.update(roomId, { status: 'closed', closedAt: new Date().toISOString() }); }
 function startAttempt(roomId, studentId) { const room = findRoom(roomId); if (room.status !== 'open') throw new AppError(404, 'ROOM_CLOSED', 'Ruang sudah ditutup.'); const attempts = repository.listAttempts(); let attempt = attempts.find(item => item.roomId === roomId && item.studentId === studentId && item.status !== 'submitted'); if (!attempt) { attempt = { id: id(), roomId, studentId, answers: {}, status: 'in_progress', startedAt: new Date().toISOString() }; attempts.push(attempt); repository.saveAttempt(attempts); } return { attempt, questions: room.questions }; }
 function saveAnswers(roomId, attemptId, studentId, answers, rawGuestToken) { const attempts = repository.listAttempts(); const attempt = attempts.find(item => item.id === attemptId && item.roomId === roomId && (studentId ? item.studentId === studentId : item.guestTokenHash === guestTokenHash(rawGuestToken)) && item.status !== 'submitted'); if (!attempt) throw new AppError(404, 'ATTEMPT_NOT_FOUND', 'Attempt tidak ditemukan.'); attempt.answers = { ...attempt.answers, ...answers }; attempt.updatedAt = new Date().toISOString(); repository.saveAttempt(attempts); return attempt; }
 function submitAttempt(roomId, attemptId, studentId, answers, rawGuestToken) { const room = findRoom(roomId); const attempts = repository.listAttempts(); const attempt = attempts.find(item => item.id === attemptId && item.roomId === roomId && (studentId ? item.studentId === studentId : item.guestTokenHash === guestTokenHash(rawGuestToken))); if (!attempt) throw new AppError(404, 'ATTEMPT_NOT_FOUND', 'Attempt tidak ditemukan.'); if (attempt.status === 'submitted') return attempt; attempt.answers = { ...attempt.answers, ...answers }; const total = room.questions.length; const benar = room.questions.reduce((n, q, i) => n + (String(attempt.answers[q.id ?? i]) === String(room.answerKey[q.id ?? i]) ? 1 : 0), 0); Object.assign(attempt, { score: total ? Math.round((benar / total) * 100) : 0, benar, total, status: 'submitted', submittedAt: new Date().toISOString() }); repository.saveAttempt(attempts); return attempt; }

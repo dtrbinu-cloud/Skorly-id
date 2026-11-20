@@ -9,6 +9,7 @@ const rateLimit = require('express-rate-limit');
 const authRoutes = require('./src/routes/auth');
 const roomRoutes = require('./src/routes/rooms');
 const attemptRoutes = require('./src/routes/attempts');
+const questionSetRoutes = require('./src/routes/questionSets');
 const { errorHandler, notFound } = require('./src/middleware/errors');
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, limit: 100 }), authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/attempts', attemptRoutes);
+app.use('/api/question-sets', questionSetRoutes);
 
 app.get('/health', (_req, res) => res.json({ ok: true, service: 'skorly-api' }));
 app.use(notFound);
