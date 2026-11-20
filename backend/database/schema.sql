@@ -1,7 +1,6 @@
 -- Skorly.id PostgreSQL schema
 -- Jalankan dengan: psql "$DATABASE_URL" -f database/schema.sql
 
-CREATE TYPE user_role AS ENUM ('guru');
 CREATE TYPE user_status AS ENUM ('aktif', 'menunggu', 'ditolak', 'nonaktif');
 CREATE TYPE source_type AS ENUM ('pdf', 'xlsx', 'csv');
 CREATE TYPE set_status AS ENUM ('draf', 'siap');
@@ -18,13 +17,11 @@ CREATE TABLE users (
   nama VARCHAR(100) NOT NULL,
   email VARCHAR(190) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
-  role user_role NOT NULL DEFAULT 'murid',
   status user_status NOT NULL DEFAULT 'aktif',
   sekolah VARCHAR(150),
   last_login_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  CONSTRAINT guru_sekolah_check CHECK (role = 'guru')
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE refresh_tokens (
@@ -38,7 +35,7 @@ CREATE TABLE refresh_tokens (
 
 CREATE TABLE question_sets (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  guru_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
   judul VARCHAR(200) NOT NULL,
   sumber_tipe source_type,
   sumber_nama VARCHAR(255),
@@ -51,7 +48,7 @@ CREATE TABLE question_sets (
 
 CREATE TABLE upload_jobs (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  guru_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
   set_id BIGINT REFERENCES question_sets(id) ON DELETE SET NULL,
   berkas_soal_path VARCHAR(255) NOT NULL,
   berkas_kunci_path VARCHAR(255),
@@ -116,7 +113,7 @@ CREATE TABLE question_options (
 CREATE TABLE rooms (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   set_id BIGINT NOT NULL REFERENCES question_sets(id) ON DELETE RESTRICT,
-  guru_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
   token CHAR(6) NOT NULL UNIQUE,
   judul VARCHAR(200) NOT NULL,
   jenis room_type NOT NULL DEFAULT 'ulangan',
@@ -192,10 +189,10 @@ CREATE TABLE notifications (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_question_sets_guru ON question_sets(guru_id);
-CREATE INDEX idx_upload_jobs_guru_stage ON upload_jobs(guru_id, tahap);
+CREATE INDEX idx_question_sets_user ON question_sets(user_id);
+CREATE INDEX idx_upload_jobs_user_stage ON upload_jobs(user_id, tahap);
 CREATE INDEX idx_questions_set ON questions(set_id);
-CREATE INDEX idx_rooms_guru_status ON rooms(guru_id, status);
+CREATE INDEX idx_rooms_user_status ON rooms(user_id, status);
 CREATE INDEX idx_attempts_room_status ON attempts(room_id, status);
 CREATE INDEX idx_attempts_student ON attempts(murid_id, created_at);
 CREATE INDEX idx_notifications_user_unread ON notifications(user_id, dibaca_pada) WHERE dibaca_pada IS NULL;

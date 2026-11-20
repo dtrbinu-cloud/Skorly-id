@@ -19,8 +19,8 @@ export function AuthProvider({ children }) {
     return payload.data.user;
   };
 
-  const register = async (nama, email, password, role = 'murid') => {
-    const payload = await apiFetch('/auth/register', { method: 'POST', body: JSON.stringify({ nama, email, password, role }) }, false);
+  const register = async (nama, email, password) => {
+    const payload = await apiFetch('/auth/register', { method: 'POST', body: JSON.stringify({ nama, email, password }) }, false);
     return payload.data.user;
   };
 
